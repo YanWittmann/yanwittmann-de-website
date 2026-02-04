@@ -31,7 +31,17 @@ $berlinDate = new DateTime("now", new DateTimeZone("Europe/Berlin"));
                 <span><?= $berlinDate->format('g:i A') ?></span>
             </div>
 
-            <i class="fa-brands fa-github profile-meta-icon"></i>
+            <div class="profile-socials">
+                <a href="https://github.com/YanWittmann" target="_blank" class="social-link no-link-style" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/yan-wittmann-b6a8562a9/" target="_blank" class="social-link no-link-style" title="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://www.youtube.com/@Skyball" target="_blank" class="social-link no-link-style" title="YouTube">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
         </div>
     </aside>
 
@@ -53,15 +63,22 @@ $berlinDate = new DateTime("now", new DateTimeZone("Europe/Berlin"));
             <div class="content-grid">
                 <?php foreach ($projects as $project): ?>
                     <a href="/projects/<?= htmlspecialchars($project['slug']) ?>" class="content-card no-link-style">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <span class="card-square"></span>
+                                <span><?= htmlspecialchars($project['title']) ?></span>
+                            </div>
+                            <small class="card-date"><?= date('Y-m-d', strtotime($project['created_at'])) ?></small>
+                        </div>
+
                         <?php if (!empty($project['image'])): ?>
                             <div class="card-cover">
                                 <img src="<?= htmlspecialchars($project['image']) ?>" alt="Cover Image" loading="lazy"/>
                             </div>
                         <?php endif; ?>
+
                         <div class="card-text">
-                            <h3><?= htmlspecialchars($project['title']) ?></h3>
                             <p><?= htmlspecialchars($project['description']) ?></p>
-                            <small>Created: <?= date('Y-m-d', strtotime($project['created_at'])) ?></small>
                         </div>
                     </a>
                 <?php endforeach; ?>
@@ -69,19 +86,26 @@ $berlinDate = new DateTime("now", new DateTimeZone("Europe/Berlin"));
         <?php endif; ?>
 
         <?php if (!empty($posts)): ?>
-            <h2>Latest Blog Posts</h2>
+            <h2>Latest Posts</h2>
             <div class="content-grid">
                 <?php foreach ($posts as $post): ?>
                     <a href="/blog/<?= htmlspecialchars($post['slug']) ?>" class="content-card no-link-style">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                <span class="card-square"></span>
+                                <span><?= htmlspecialchars($post['title']) ?></span>
+                            </div>
+                            <small class="card-date"><?= date('Y-m-d', strtotime($post['created_at'])) ?></small>
+                        </div>
+
                         <?php if (!empty($post['image'])): ?>
                             <div class="card-cover">
                                 <img src="<?= htmlspecialchars($post['image']) ?>" alt="Cover Image" loading="lazy"/>
                             </div>
                         <?php endif; ?>
+
                         <div class="card-text">
-                            <h3><?= htmlspecialchars($post['title']) ?></h3>
                             <p><?= htmlspecialchars($post['description']) ?></p>
-                            <small>Published: <?= date('Y-m-d', strtotime($post['created_at'])) ?></small>
                         </div>
                     </a>
                 <?php endforeach; ?>

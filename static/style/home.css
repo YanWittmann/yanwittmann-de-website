@@ -91,6 +91,27 @@
     opacity: 0.7;
 }
 
+.profile-socials {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 0.75rem;
+    margin-bottom: -0.5rem;
+}
+
+.social-link {
+    color: var(--color-text);
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: color 0.1s;
+    opacity: 0.8;
+}
+
+.social-link:hover {
+    color: var(--color-primary);
+}
+
 .content-list h2 {
     margin-bottom: 1rem;
 }
