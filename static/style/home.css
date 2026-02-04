@@ -21,6 +21,10 @@
         display: block;
         margin-top: 0;
     }
+
+    .sidebar {
+        margin-bottom: 1rem;
+    }
 }
 
 .profile-pic {

@@ -69,7 +69,7 @@
 }
 
 .card-text {
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;

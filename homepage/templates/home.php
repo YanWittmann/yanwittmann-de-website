@@ -49,17 +49,17 @@ $berlinDate = new DateTime("now", new DateTimeZone("Europe/Berlin"));
         <div>
             <h1>Hello there!</h1>
             <p>
-                I'm Yan Wittmann, I'm <?php
-                $dob = new DateTime('2000-05-07');
+                I'm Yan Wittmann, I'm a <?php
+                $dob = new DateTime('2000-05-07', new DateTimeZone("Europe/Berlin"));
                 $now = new DateTime();
                 echo date_diff($dob, $now)->y;
-                ?> years old and Software Engineer from Heidelberg, Germany.
+                ?> years old Software Engineer from Heidelberg, Germany.<br/>
                 On this page you can find all of my recent projects.
             </p>
         </div>
 
         <?php if (!empty($projects)): ?>
-            <h2>Projects</h2>
+            <h2><a href="/projects" class="no-link-style">Projects <i class="fa-solid fa-arrow-right" style="font-size: 0.7em; margin-left: 4px;"></i></a></h2>
             <div class="content-grid">
                 <?php foreach ($projects as $project): ?>
                     <a href="/projects/<?= htmlspecialchars($project['slug']) ?>" class="content-card no-link-style">
@@ -86,7 +86,7 @@ $berlinDate = new DateTime("now", new DateTimeZone("Europe/Berlin"));
         <?php endif; ?>
 
         <?php if (!empty($posts)): ?>
-            <h2>Latest Posts</h2>
+            <h2><a href="/blog" class="no-link-style">Latest Posts <i class="fa-solid fa-arrow-right" style="font-size: 0.7em; margin-left: 4px;"></i></a></h2>
             <div class="content-grid">
                 <?php foreach ($posts as $post): ?>
                     <a href="/blog/<?= htmlspecialchars($post['slug']) ?>" class="content-card no-link-style">

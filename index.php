@@ -19,10 +19,10 @@ $router->set404(function() {
 
 // Homepage
 $router->get('/', function() use ($db) {
-    $stmt = $db->query("SELECT * FROM homepage_projects ORDER BY created_at DESC LIMIT 3");
+    $stmt = $db->query("SELECT * FROM homepage_projects ORDER BY featured DESC, created_at DESC LIMIT 4");
     $projects = $stmt->fetchAll();
 
-    $stmt = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC LIMIT 3");
+    $stmt = $db->query("SELECT * FROM homepage_posts ORDER BY featured DESC, created_at DESC LIMIT 4");
     $posts = $stmt->fetchAll();
 
     View::render('home', [
@@ -57,7 +57,7 @@ $router->get('/projects/([^/]+)', function($slug) use ($db, $renderer) {
         return;
     }
 
-    $project['rendered_content'] = $renderer->render($project['content'], (bool)$project['is_markdown']);
+    $project['content'] = $renderer->render($project['content'], (bool)$project['is_markdown']);
 
     View::render('project_detail', [
         'title' => $project['title'],
@@ -88,7 +88,7 @@ $router->get('/blog/([^/]+)', function($slug) use ($db, $renderer) {
         return;
     }
 
-    $post['rendered_content'] = $renderer->render($post['content'], (bool)$post['is_markdown']);
+    $post['content'] = $renderer->render($post['content'], (bool)$post['is_markdown']);
 
     View::render('blog_detail', [
         'title' => $post['title'],

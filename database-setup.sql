@@ -10,6 +10,7 @@ CREATE TABLE homepage_posts (
     title varchar(255) NOT NULL,
     description text DEFAULT NULL,
     image text DEFAULT NULL,
+    featured bool DEFAULT false,
     created_at datetime DEFAULT CURRENT_TIMESTAMP(),
     content_id int,
     FOREIGN KEY (content_id) REFERENCES homepage_content(id)
@@ -21,6 +22,7 @@ CREATE TABLE homepage_projects (
     title varchar(255) NOT NULL,
     description text DEFAULT NULL,
     image text DEFAULT NULL,
+    featured bool DEFAULT false,
     created_at datetime DEFAULT CURRENT_TIMESTAMP(),
     content_id int,
     FOREIGN KEY (content_id) REFERENCES homepage_content(id)

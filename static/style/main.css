@@ -37,6 +37,10 @@ a {
     color: var(--color-primary);
 }
 
+a.no-link-style {
+    color: var(--color-text);
+}
+
 a:visited:not(.no-link-style) {
     color: #B6401CFF;
 }
