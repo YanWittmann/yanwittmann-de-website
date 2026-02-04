@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('/static/font/RobotoSlab-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --color-bg: #f0f0e0;
+    --color-text: #2f2f2f;
+    --color-primary: #b61c41;
+    --color-accent: #dcdcdc;
+    --color-card-bg: #f8f8f0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Roboto Slab', monospace, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-image: linear-gradient(to right, var(--color-accent) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-accent) 1px, transparent 1px);
+    background-size: 5px 5px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+a:visited:not(.no-link-style) {
+    color: #B6401CFF;
+}
+
+a:hover:not(.no-link-style) {
+    text-decoration: underline;
+}
+
+h1 {
+    margin: 0;
+}
+
+h2 {
+    margin: 0;
+}
+
+h3 {
+    margin: 0;
+}
+
+/* HEADER */
+
+.site-header {
+    background: var(--color-primary);
+    color: var(--color-bg);
+    padding: 0.75rem 0;
+    border-bottom: 2px solid var(--color-text);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-content a {
+    color: var(--color-bg);
+    text-decoration: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
+}
+
+.header-content nav a:hover {
+    border-bottom: 2px solid var(--color-bg);
+}
+
+/* CONTENT */
+
+.main-layout {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+    flex-grow: 1;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 3rem;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    border-top: 2px solid var(--color-text);
+}
