@@ -1,124 +1,144 @@
-.home-grid {
+.layout-grid {
     display: grid;
     grid-template-columns: 300px 1fr;
-    gap: 40px;
+    grid-template-rows: auto 1fr;
+    gap: 0 40px;
 }
 
-.sidebar {
-    background-color: var(--color-card-bg);
-    border: 1px solid var(--color-text);
-    box-shadow: 4px 4px 0 var(--color-primary);
-    padding: 2rem;
+.intro-area {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 40px;
+}
+
+.sidebar-card {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 4px 4px 0 var(--accent);
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     height: fit-content;
-    margin-top: 10px;
 }
 
-@media (max-width: 720px) {
-    .home-grid {
-        display: block;
-        margin-top: 0;
-    }
-
-    .sidebar {
-        margin-bottom: 1rem;
-    }
+.content-area {
+    grid-column: 2;
+    grid-row: 2;
 }
 
 .profile-pic {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid var(--color-text);
-    margin-bottom: 0.5rem;
+    border: 3px solid var(--border-color);
     object-fit: cover;
+    margin-bottom: 25px;
 }
 
-.profile-header {
+.meta-list {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0 0 25px 0;
+    text-align: left;
     width: 100%;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.profile-name {
-    font-size: 2rem;
-    font-weight: 400;
-    margin: 0;
-}
-
-.profile-separator {
-    display: block;
-    position: relative;
-    width: 60%;
-    height: 1px;
-    background-color: #999;
-    margin: 0.3rem auto;
-}
-
-.profile-separator::after {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 45px;
-    height: 3px;
-    background-color: var(--color-text);
-}
-
-.profile-handle {
     font-size: 0.9rem;
-    opacity: 0.8;
-    font-family: monospace;
-    margin-top: 0.5rem;
+    color: var(--text-main);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
-.profile-meta {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding-left: 1rem;
-}
-
-.profile-meta-row {
+.meta-list li {
     display: flex;
     align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
-.profile-meta-icon {
-    width: 24px;
+.meta-list li:last-child {
+    margin-bottom: 0;
+}
+
+.meta-list i {
+    width: 20px;
     text-align: center;
-    margin-right: 8px;
-    font-size: 1.1em;
-    opacity: 0.7;
+    color: var(--text-light);
 }
 
-.profile-socials {
+.meta-list a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.tech-stack {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.tech-stack h3 {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+}
+
+.tech-tags-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-tags-sidebar .tag {
+    background: var(--bg-light);
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    border-radius: 4px;
+    color: var(--text-main);
+}
+
+.socials {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    width: 100%;
-    margin-top: 0.75rem;
-    margin-bottom: -0.5rem;
+    gap: 20px;
 }
 
-.social-link {
-    color: var(--color-text);
-    font-size: 1.4rem;
-    text-decoration: none;
-    transition: color 0.1s;
-    opacity: 0.8;
+.socials a {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    transition: color 0.2s;
 }
 
-.social-link:hover {
-    color: var(--color-primary);
+.socials a:hover {
+    color: var(--accent);
 }
 
-.content-list h2 {
-    margin-bottom: 1rem;
-}
-.content-list h2:not(:first-child) {
-    margin-top: 1rem;
+@media (max-width: 850px) {
+    .layout-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .intro-area {
+        order: 1;
+        margin-bottom: 30px;
+    }
+
+    .sidebar-card {
+        order: 2;
+        width: 100%;
+        margin-bottom: 40px;
+    }
+
+    .content-area {
+        order: 3;
+    }
 }

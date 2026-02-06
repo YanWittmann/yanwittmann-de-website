@@ -1,13 +1,14 @@
-<a href="/projects">&larr; Back to projects</a>
-
-<article>
+<header class="main-header">
     <h1><?= htmlspecialchars($project['title']) ?></h1>
+    <?php if (!empty($project['tags'])): ?>
+        <div class="p-tags" style="margin-top: 1rem;">
+            <?php foreach ($project['tags'] as $tag): ?>
+                <span class="pt-tag"><?= htmlspecialchars($tag) ?></span>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</header>
 
-    <small style="color: #888; display: block; margin-bottom: 1rem;">
-        Published on <?= date('F j, Y', strtotime($project['created_at'])) ?>
-    </small>
-
-    <div class="content">
-        <?= $project['content'] ?>
-    </div>
-</article>
+<div class="prose" style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc;">
+    <?= $project['content'] ?>
+</div>

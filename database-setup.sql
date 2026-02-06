@@ -11,6 +11,7 @@ CREATE TABLE homepage_posts (
     description text DEFAULT NULL,
     image text DEFAULT NULL,
     featured bool DEFAULT false,
+    tags JSON DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP(),
     content_id int,
     FOREIGN KEY (content_id) REFERENCES homepage_content(id)
@@ -23,6 +24,7 @@ CREATE TABLE homepage_projects (
     description text DEFAULT NULL,
     image text DEFAULT NULL,
     featured bool DEFAULT false,
+    tags JSON DEFAULT NULL,
     created_at datetime DEFAULT CURRENT_TIMESTAMP(),
     content_id int,
     FOREIGN KEY (content_id) REFERENCES homepage_content(id)
