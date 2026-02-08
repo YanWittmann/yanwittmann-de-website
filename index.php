@@ -13,7 +13,7 @@ $db = new Database($config);
 $router = new Router();
 $renderer = new ContentRenderer();
 
-$router->set404(function() {
+$router->set404(function () {
     header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
     View::render('404', [
         'title' => 'Page Not Found',
@@ -25,41 +25,48 @@ $router->set404(function() {
 });
 
 // Homepage
-$router->get('/', function() use ($db) {
+$router->get('/', function () use ($db) {
     $projects = $db->query("SELECT * FROM homepage_projects ORDER BY featured DESC, created_at DESC LIMIT 4")->fetchAll();
     $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC LIMIT 3")->fetchAll();
 
     View::render('home', [
-        'title' => 'Yan Wittmann - Software Engineer',
         'projects' => $projects,
         'posts' => $posts,
-        'breadcrumbs' => [['label' => 'yanwittmann.de', 'url' => '/']],
+        'breadcrumbs' => [
+            ['label' => 'yanwittmann.de', 'url' => '/']
+        ],
         'extra_css' => ['/static/style/home.css', '/static/style/content.css']
     ]);
 });
 
 // Projects List
-$router->get('/projects', function() use ($db) {
+$router->get('/projects', function () use ($db) {
     $projects = $db->query("SELECT * FROM homepage_projects ORDER BY created_at DESC")->fetchAll();
     View::render('projects_list', [
-        'title' => 'Projects',
+        'title' => 'All Projects',
+        'subtitle' => ' A complete collection of my work, experiments, and open-source contributions.',
         'projects' => $projects,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
-            ['label' => 'Projects']
+            ['label' => 'projects']
         ],
         'extra_css' => ['/static/style/content.css']
     ]);
 });
 
 // Single Project
-$router->get('/projects/([^/]+)', function($slug) use ($db, $renderer) {
+$router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
     $stmt = $db->query("SELECT p.*, c.content, c.is_markdown FROM homepage_projects p JOIN homepage_content c ON p.content_id = c.id WHERE p.slug = ?", [$slug]);
     $project = $stmt->fetch();
 
     if (!$project) {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        View::render('404', ['title' => 'Project Not Found']);
+        View::render('404', [
+            'title' => 'Project Not Found',
+            'breadcrumbs' => [
+                ['label' => 'yanwittmann.de', 'url' => '/'],
+                ['label' => '404 Not Found']
+            ]]);
         return;
     }
 
@@ -68,10 +75,12 @@ $router->get('/projects/([^/]+)', function($slug) use ($db, $renderer) {
 
     View::render('project_detail', [
         'title' => $project['title'],
+        'tags' => $project['tags'],
         'project' => $project,
+        "page_size" => "900",
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
-            ['label' => 'Projects', 'url' => '/projects'],
+            ['label' => 'projects', 'url' => '/projects'],
             ['label' => $project['title']]
         ],
         'extra_css' => ['/static/style/content.css']
@@ -79,27 +88,33 @@ $router->get('/projects/([^/]+)', function($slug) use ($db, $renderer) {
 });
 
 // Blog List
-$router->get('/blog', function() use ($db) {
+$router->get('/blog', function () use ($db) {
     $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC")->fetchAll();
     View::render('blog_list', [
         'title' => 'Blog',
         'posts' => $posts,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
-            ['label' => 'Blog']
+            ['label' => 'blog']
         ],
         'extra_css' => ['/static/style/content.css']
     ]);
 });
 
 // Single Post
-$router->get('/blog/([^/]+)', function($slug) use ($db, $renderer) {
+$router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
     $stmt = $db->query("SELECT p.*, c.content, c.is_markdown FROM homepage_posts p JOIN homepage_content c ON p.content_id = c.id WHERE p.slug = ?", [$slug]);
     $post = $stmt->fetch();
 
     if (!$post) {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        View::render('404', ['title' => 'Post Not Found']);
+        View::render('404', [
+            'title' => 'Post Not Found',
+            'breadcrumbs' => [
+                ['label' => 'yanwittmann.de', 'url' => '/'],
+                ['label' => '404 Not Found']
+            ]
+        ]);
         return;
     }
 
@@ -108,9 +123,10 @@ $router->get('/blog/([^/]+)', function($slug) use ($db, $renderer) {
     View::render('blog_detail', [
         'title' => $post['title'],
         'post' => $post,
+        "page_size" => "850",
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
-            ['label' => 'Blog', 'url' => '/blog'],
+            ['label' => 'blog', 'url' => '/blog'],
             ['label' => $post['title']]
         ],
         'extra_css' => ['/static/style/content.css']

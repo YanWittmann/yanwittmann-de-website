@@ -101,24 +101,6 @@
     flex-grow: 1;
 }
 
-.card-tags {
-    margin-top: 15px;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-.card-tags .tag-item {
-    color: var(--accent);
-    display: inline-block;
-}
-
-.card-tags .tag-item:not(:last-child)::after {
-    content: '•';
-    margin: 0 0 0 8px;
-    color: #ccc;
-}
-
 /* --- Post and Prose styles --- */
 .prose {
     color: var(--text-light);

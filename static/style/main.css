@@ -79,7 +79,6 @@ body {
 
 .page-wrapper {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     flex-grow: 1;
     padding: 40px 20px;
@@ -112,53 +111,22 @@ footer {
     font-size: 1.2rem;
     color: var(--text-light);
     line-height: 1.6;
-    margin: 20px 0 0 0;
-    padding-top: 20px;
-    border-top: 1px solid #ccc;
 }
 
-.section-header {
+.content-tags {
+    margin-top: 15px;
     font-family: var(--font-mono);
+    font-size: 0.8rem;
     font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
 }
 
-.section-header .label {
-    color: var(--text-main);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-right: 15px;
-    transition: color 0.2s;
-}
-
-.section-header .label span {
+.content-tags .content-tags-item {
     color: var(--accent);
+    display: inline-block;
 }
 
-.section-header .label i {
-    font-size: 0.9em;
-    color: var(--text-light);
-    transition: color 0.2s, transform 0.2s;
-}
-
-.section-header .label:hover {
-    color: var(--accent);
-}
-
-.section-header .label:hover i {
-    color: var(--accent);
-    transform: translateX(3px);
-}
-
-.section-header::after {
-    content: '';
-    flex-grow: 1;
-    height: 2px;
-    background: var(--text-main);
-    display: block;
+.content-tags .content-tags-item:not(:last-child)::after {
+    content: '•';
+    margin: 0 0 0 8px;
+    color: #ccc;
 }

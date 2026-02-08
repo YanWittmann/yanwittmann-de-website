@@ -22,9 +22,9 @@
 
             <?php $tags = isset($project['tags']) ? (is_array($project['tags']) ? $project['tags'] : json_decode($project['tags'], true)) : []; ?>
             <?php if (!empty($tags)): ?>
-                <div class="card-tags">
+                <div class="content-tags">
                     <?php foreach ($tags as $tag): ?>
-                        <span class="tag-item"><?= htmlspecialchars($tag) ?></span>
+                        <span class="content-tags-item"><?= htmlspecialchars($tag) ?></span>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

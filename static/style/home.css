@@ -8,7 +8,7 @@
 .intro-area {
     grid-column: 2;
     grid-row: 1;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .sidebar-card {
@@ -129,7 +129,7 @@
 
     .intro-area {
         order: 1;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
 
     .sidebar-card {
@@ -141,4 +141,50 @@
     .content-area {
         order: 3;
     }
+}
+
+.section-header {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.section-header .label {
+    color: var(--text-main);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: 15px;
+    transition: color 0.2s;
+}
+
+.section-header .label span {
+    color: var(--accent);
+}
+
+.section-header .label i {
+    font-size: 0.9em;
+    color: var(--text-light);
+    transition: color 0.2s, transform 0.2s;
+}
+
+.section-header .label:hover {
+    color: var(--accent);
+}
+
+.section-header .label:hover i {
+    color: var(--accent);
+    transform: translateX(3px);
+}
+
+.section-header::after {
+    content: '';
+    flex-grow: 1;
+    height: 2px;
+    background: var(--text-main);
+    display: block;
 }
