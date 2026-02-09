@@ -98,7 +98,7 @@ $router->get('/projects', function () use ($db) {
     ];
     $sidebar = View::getOutput('partials/sidebar_generic', $sidebarData);
 
-    $pageTitle = 'Projects';
+    $pageTitle = 'All Projects';
     if ($activeCategory) {
         $pageTitle = $activeCategory;
     } elseif ($activeTag) {
@@ -114,7 +114,7 @@ $router->get('/projects', function () use ($db) {
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'projects']
         ],
-        'extra_css' => ['/static/style/content.css']
+        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
     ]);
 });
 
@@ -153,7 +153,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
             ['label' => 'projects', 'url' => '/projects'],
             ['label' => $project['title']]
         ],
-        'extra_css' => ['/static/style/content.css']
+        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
     ]);
 });
 
@@ -169,7 +169,7 @@ $router->get('/blog', function () use ($db) {
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'blog']
         ],
-        'extra_css' => ['/static/style/content.css']
+        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
     ]);
 });
 
@@ -208,7 +208,7 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
             ['label' => 'blog', 'url' => '/blog'],
             ['label' => $post['title']]
         ],
-        'extra_css' => ['/static/style/content.css']
+        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
     ]);
 });
 

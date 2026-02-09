@@ -97,7 +97,21 @@
     color: var(--accent);
 }
 
-/* --- Sidebar Filter Menu (New) --- */
+/* --- Sidebar Filter Menu --- */
+.filter-group-title {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin: 20px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-group-title:first-of-type {
+    margin-top: 0;
+}
+
 .filter-menu {
     display: flex;
     flex-direction: column;
@@ -312,45 +326,6 @@
     content: '•';
     margin: 0 0 0 8px;
     color: #ccc;
-}
-
-/* --- Post and Prose styles --- */
-.prose {
-    color: var(--text-light);
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.prose h1, .prose h2, .prose h3 {
-    color: var(--text-main);
-    font-family: var(--font-heading);
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-}
-
-.prose p {
-    margin-bottom: 1.5em;
-}
-
-.prose a {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-.prose code {
-    background: #eee;
-    padding: 2px 5px;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 0.9em;
-}
-
-.prose pre {
-    background: #1e1e1e;
-    color: #dcdcdc;
-    padding: 1em;
-    border-radius: 5px;
-    overflow-x: auto;
 }
 
 .socials {
