@@ -138,7 +138,6 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
 
     View::render('project_detail', [
         'title' => $project['title'],
-        'subtitle' => $project['description'],
         'project' => $project,
         'sidebar' => $sidebar,
         "page_size" => "1200",
@@ -193,7 +192,6 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
 
     View::render('blog_detail', [
         'title' => $post['title'],
-        'subtitle' => $post['description'],
         'post' => $post,
         'sidebar' => $sidebar,
         "page_size" => "1100",
