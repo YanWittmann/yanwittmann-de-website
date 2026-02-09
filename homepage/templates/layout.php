@@ -30,26 +30,52 @@
 </header>
 
 <div class="page-wrapper">
-    <?php if (isset($title)): ?>
-        <header class="main-header">
-            <h1 style="margin: 0; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
-                <?= $title ?>
-                <?php if (!empty($tags)): ?>
-                    <span class="content-tags" style="margin-left: 10px; font-size: 1rem;">
+    <?php if (isset($sidebar)): ?>
+        <!-- Two-Column Grid Layout -->
+        <div class="content-grid">
+            <div class="sidebar-column">
+                <?= $sidebar ?>
+            </div>
+
+            <main class="main-column">
+                <?php if (isset($title)): ?>
+                    <header class="main-header">
+                        <h1 style="margin: 0; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
+                            <?= $title ?>
+                        </h1>
+                        <?php if (isset($subtitle)): ?>
+                            <p class="intro-text">
+                                <?= $subtitle ?>
+                            </p>
+                        <?php endif; ?>
+                    </header>
+                <?php endif; ?>
+                <?= $content ?>
+            </main>
+        </div>
+    <?php else: ?>
+        <!-- Default Full-Width Layout -->
+        <?php if (isset($title)): ?>
+            <header class="main-header">
+                <h1 style="margin: 0; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
+                    <?= $title ?>
+                    <?php if (!empty($tags)): ?>
+                        <span class="content-tags" style="margin-left: 10px; font-size: 1rem;">
                         <?php foreach ($tags as $tag): ?>
                             <span class="content-tags-item"><?= htmlspecialchars($tag) ?></span>
                         <?php endforeach; ?>
                     </span>
+                    <?php endif; ?>
+                </h1>
+                <?php if (isset($subtitle)): ?>
+                    <p class="intro-text">
+                        <?= $subtitle ?>
+                    </p>
                 <?php endif; ?>
-            </h1>
-            <?php if (isset($subtitle)): ?>
-                <p class="intro-text">
-                    <?= $subtitle ?>
-                </p>
-            <?php endif; ?>
-        </header>
+            </header>
+        <?php endif; ?>
+        <?= $content ?>
     <?php endif; ?>
-    <?= $content ?>
 </div>
 
 <footer>

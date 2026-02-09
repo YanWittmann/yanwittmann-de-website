@@ -11,7 +11,7 @@
         <p class="intro-text">While you're here, check out some of the projects or posts below!</p>
     </div>
 
-    <?php include __DIR__ . '/partials/sidebar.php'; ?>
+    <?php include __DIR__ . '/partials/sidebar_home.php'; ?>
 
     <main class="content-area">
         <div class="section-header">
@@ -20,7 +20,7 @@
 
         <div class="project-list-grid">
             <?php foreach ($projects as $project): ?>
-                <?php include __DIR__ . '/partials/project_card.php'; ?>
+                <?php \App\View::partial('project_card', ['project' => $project]); ?>
             <?php endforeach; ?>
         </div>
 

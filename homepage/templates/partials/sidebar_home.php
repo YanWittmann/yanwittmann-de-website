@@ -1,4 +1,4 @@
-<aside class="sidebar-card">
+<aside class="sidebar-card sidebar-card-home">
     <img src="/static/img/profile-picture-yan.webp" class="profile-pic" alt="Profile">
 
     <ul class="meta-list">

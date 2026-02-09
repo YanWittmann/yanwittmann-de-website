@@ -11,67 +11,20 @@
     margin-bottom: 20px;
 }
 
-.sidebar-card {
+/* Sidebar specific to home layout positioning, styles imported from content.css */
+.sidebar-card-home {
     grid-column: 1;
     grid-row: 1 / span 2;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    box-shadow: 4px 4px 0 var(--accent);
     padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: fit-content;
 }
 
 .content-area {
     grid-column: 2;
     grid-row: 2;
-}
-
-.profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 3px solid var(--border-color);
-    object-fit: cover;
-    margin-bottom: 25px;
-}
-
-.meta-list {
-    list-style: none;
-    padding: 20px 0;
-    margin: 0 0 25px 0;
-    text-align: left;
-    width: 100%;
-    font-size: 0.9rem;
-    color: var(--text-main);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.meta-list li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.meta-list li:last-child {
-    margin-bottom: 0;
-}
-
-.meta-list i {
-    width: 20px;
-    text-align: center;
-    color: var(--text-light);
-}
-
-.meta-list a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
 }
 
 .tech-stack {
@@ -88,39 +41,6 @@
     text-transform: uppercase;
 }
 
-.tech-tags-sidebar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.tech-tags-sidebar .tag {
-    background: var(--bg-light);
-    border: 1px solid #ccc;
-    padding: 4px 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    font-family: var(--font-mono);
-    border-radius: 4px;
-    color: var(--text-main);
-}
-
-.socials {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.socials a {
-    color: var(--text-light);
-    font-size: 1.5rem;
-    transition: color 0.2s;
-}
-
-.socials a:hover {
-    color: var(--accent);
-}
-
 @media (max-width: 850px) {
     .layout-grid {
         display: flex;
@@ -132,7 +52,7 @@
         margin-bottom: 10px;
     }
 
-    .sidebar-card {
+    .sidebar-card-home {
         order: 2;
         width: 100%;
         margin-bottom: 40px;

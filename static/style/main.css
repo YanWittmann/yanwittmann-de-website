@@ -34,20 +34,28 @@ body {
 .top-nav-bar {
     background: #111;
     color: #fff;
-    padding: 10px 20px;
+    padding: 8px 20px;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 4px solid var(--accent);
     flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.top-nav-bar nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .top-nav-bar nav a {
     color: #fff;
     text-decoration: none;
-    margin-left: 20px;
+    padding: 5px 0;
 }
 
 .top-nav-bar nav a:hover {
@@ -56,6 +64,9 @@ body {
 
 .breadcrumbs {
     font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .breadcrumbs a {
@@ -70,7 +81,7 @@ body {
 }
 
 .breadcrumbs .separator {
-    margin: 0 0.5ch;
+    margin: 0 2px;
     opacity: 0.5;
 }
 
@@ -89,10 +100,12 @@ footer {
     background: #111;
     color: #fff;
     text-align: center;
-    padding: 15px;
+    padding: 15px 20px;
     font-size: 0.8rem;
     flex-shrink: 0;
     margin-top: auto;
+    font-family: var(--font-mono);
+    border-top: 4px solid var(--accent);
 }
 
 .main-header h1 {
@@ -114,6 +127,18 @@ footer {
     line-height: 1.6;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
+}
+
+@media (max-width: 600px) {
+    .main-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .top-nav-bar {
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+    }
 }
 
 .content-tags {

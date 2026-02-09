@@ -4,7 +4,7 @@ namespace App;
 
 class View
 {
-    private static function getOutput(string $viewName, array $data): string
+    public static function getOutput(string $viewName, array $data): string
     {
         $viewFile = __DIR__ . '/../templates/' . $viewName . '.php';
 
