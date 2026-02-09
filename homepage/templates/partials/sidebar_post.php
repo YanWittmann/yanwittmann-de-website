@@ -5,7 +5,7 @@
         </div>
     <?php endif; ?>
 
-    <div class="sidebar-body">
+    <div style="padding: 20px;">
         <ul class="meta-list">
             <li>
                 <i class="far fa-calendar"></i>

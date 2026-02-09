@@ -43,6 +43,7 @@ $router->get('/', function () use ($db) {
 $router->get('/projects', function () use ($db) {
     $activeCategory = $_GET['category'] ?? null;
     $activeTag = $_GET['tag'] ?? null;
+    $hasActiveFilter = $activeCategory !== null || $activeTag !== null;
 
     $params = [];
     $sql = "SELECT * FROM homepage_projects";
@@ -58,11 +59,6 @@ $router->get('/projects', function () use ($db) {
 
     $categories = $db->query("SELECT DISTINCT category FROM homepage_projects WHERE category IS NOT NULL AND category != '' ORDER BY category ASC")->fetchAll(PDO::FETCH_COLUMN);
     $categoryLinks = [];
-    $categoryLinks[] = [
-        'label' => 'No Filter',
-        'url' => '/projects',
-        'active' => !$activeCategory && !$activeTag
-    ];
     foreach ($categories as $cat) {
         $categoryLinks[] = [
             'label' => $cat,
@@ -90,13 +86,11 @@ $router->get('/projects', function () use ($db) {
         ];
     }
 
-    $sidebarData = [
-        'groups' => [
-            ['title' => 'Categories', 'links' => $categoryLinks],
-            ['title' => 'Tags', 'links' => $tagLinks]
-        ]
-    ];
-    $sidebar = View::getOutput('partials/sidebar_generic', $sidebarData);
+    $sidebar = View::getOutput('partials/sidebar_project_list', [
+        'resetUrl' => $hasActiveFilter ? '/projects' : null,
+        'categories' => $categoryLinks,
+        'tags' => $tagLinks
+    ]);
 
     $pageTitle = 'All Projects';
     if ($activeCategory) {
