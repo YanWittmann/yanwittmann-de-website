@@ -20,7 +20,11 @@
                 <?= htmlspecialchars($project['description']) ?>
             </p>
 
-            <?php $tags = isset($project['tags']) ? (is_array($project['tags']) ? $project['tags'] : json_decode($project['tags'], true)) : []; ?>
+            <?php
+            $tags = [];
+            if (isset($project['category'])) $tags[] = $project['category'];
+            $tags = array_merge($tags, isset($project['tags']) ? (is_array($project['tags']) ? $project['tags'] : json_decode($project['tags'], true)) : []);
+            ?>
             <?php if (!empty($tags)): ?>
                 <div class="content-tags">
                     <?php foreach ($tags as $tag): ?>

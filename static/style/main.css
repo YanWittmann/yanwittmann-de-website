@@ -2,10 +2,12 @@
     --accent: #b61c41;
     --text-main: #2f2f2f;
     --text-light: #555;
+    --text-muted: #666;
     --border-color: #2f2f2f;
-    --bg-light: #eeeeee;
-    --bg-card: #f5f5f5;
-    --font-body: 'Roboto Slab', serif;
+    --bg-light: #f8f9fa;
+    --bg-card: #ffffff;
+    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Roboto Slab', serif;
     --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -22,9 +24,8 @@ body {
     font-family: var(--font-body);
     color: var(--text-main);
     background: var(--bg-light);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-    background-size: 5px 5px;
+    background-image: radial-gradient(#d1d1d1 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -111,10 +112,11 @@ footer {
     font-size: 1.2rem;
     color: var(--text-light);
     line-height: 1.6;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
 }
 
 .content-tags {
-    margin-top: 15px;
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 700;
@@ -123,6 +125,10 @@ footer {
 .content-tags .content-tags-item {
     color: var(--accent);
     display: inline-block;
+}
+
+.content-tags .content-tags-item:not(:first-child) {
+    opacity: 90%;
 }
 
 .content-tags .content-tags-item:not(:last-child)::after {

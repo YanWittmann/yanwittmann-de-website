@@ -1,17 +1,14 @@
 <div class="layout-grid">
     <div class="intro-area">
         <header class="main-header">
-            <h1>Yan Wittmann</h1>
-            <div class="subtitle">SOFTWARE ENGINEER // @skyball</div>
+            <h1>Hello, I'm Yan Wittmann</h1>
+            <div class="subtitle">SOFTWARE ENGINEER // <?php
+                $dob = new DateTime('2000-05-07', new DateTimeZone("Europe/Berlin"));
+                $now = new DateTime();
+                echo date_diff($dob, $now)->y;
+                ?> YEARS // @SKYBALL</div>
         </header>
-        <p class="intro-text">
-            I'm a <?php
-            $dob = new DateTime('2000-05-07', new DateTimeZone("Europe/Berlin"));
-            $now = new DateTime();
-            echo date_diff($dob, $now)->y;
-            ?> years old Software Engineer.
-            On this page you can find all of my recent projects.
-        </p>
+        <p class="intro-text">While you're here, check out some of the projects or posts below!</p>
     </div>
 
     <?php include __DIR__ . '/partials/sidebar.php'; ?>

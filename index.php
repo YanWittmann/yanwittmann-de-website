@@ -71,6 +71,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
     }
 
     $project['tags'] = json_decode($project['tags'] ?? '[]', true);
+    $project['links'] = json_decode($project['links'] ?? '[]', true);
     $project['content'] = $renderer->render($project['content'], (bool)$project['is_markdown']);
 
     View::render('project_detail', [
@@ -118,11 +119,13 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
         return;
     }
 
+    $post['tags'] = json_decode($post['tags'] ?? '[]', true);
     $post['content'] = $renderer->render($post['content'], (bool)$post['is_markdown']);
 
     View::render('blog_detail', [
         'title' => $post['title'],
         'post' => $post,
+        'tags' => $post['tags'],
         "page_size" => "850",
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
