@@ -4,19 +4,6 @@
     <?php endif; ?>
 
     <div style="padding: 20px;">
-        <ul class="meta-list">
-            <li>
-                <i class="far fa-calendar"></i>
-                <span><?= date('Y-m-d', strtotime($project['created_at'])) ?></span>
-            </li>
-            <?php if (!empty($project['category'])): ?>
-                <li>
-                    <i class="fas fa-layer-group"></i>
-                    <span><?= htmlspecialchars($project['category']) ?></span>
-                </li>
-            <?php endif; ?>
-        </ul>
-
         <?php if (!empty($project['tags'])): ?>
             <div style="margin-bottom: 25px;">
                 <?php \App\View::partial('tags_list', ['tags' => $project['tags']]); ?>

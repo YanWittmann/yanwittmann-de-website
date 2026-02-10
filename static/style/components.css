@@ -5,19 +5,23 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-}
-
-.card.shadow-hover {
-    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    /* Default State: Hard Shadow present */
+    box-shadow: 6px 6px 0 var(--accent);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 
 .card.shadow-hover:hover {
-    box-shadow: 6px 6px 0 var(--accent);
-    transform: translateY(-2px);
-    z-index: 1;
+    /* Lift up, shadow stays */
+    transform: translateY(-4px);
+    box-shadow: 6px 10px 0 var(--accent);
+    z-index: 10;
 }
 
 .card.sidebar {
+    /* Sidebar also has the shadow */
     box-shadow: 6px 6px 0 var(--accent);
     height: fit-content;
 }
@@ -37,10 +41,12 @@
     align-items: center;
     padding: 10px 15px;
     border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    background: #fff;
 }
 
 .card-title {
-    font-family: var(--font-mono);
+    font-family: var(--font-head);
     font-weight: bold;
     font-size: 1rem;
     margin: 0;
@@ -58,7 +64,7 @@
 
 .card-image {
     width: 100%;
-    height: 200px; /* Default height */
+    height: 200px;
     object-fit: cover;
     display: block;
     border-bottom: 1px solid var(--border-color);
@@ -74,6 +80,54 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+}
+
+/* --- Section Anchors (01 // Projects) --- */
+.section-anchor {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+    margin: 0 0 30px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+}
+
+.section-anchor .num {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+.section-anchor .label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.section-anchor .arrow {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    transition: color 0.2s;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+.section-anchor .arrow i {
+    transition: transform 0.2s;
+}
+
+/* Interaction: Icon moves right */
+.section-anchor:hover .arrow i {
+    transform: translateX(5px);
+    color: var(--accent);
+}
+
+.section-anchor:hover .arrow {
+    color: var(--accent);
 }
 
 /* --- Post Row Component --- */
@@ -96,7 +150,7 @@
     margin: 0;
     font-size: 1.1rem;
     font-weight: 600;
-    font-family: var(--font-heading);
+    font-family: var(--font-head);
     color: var(--text-main);
 }
 
@@ -132,8 +186,7 @@
 }
 
 .tag {
-    background: var(--bg-light);
-    border: 1px solid #ccc;
+    background: #eee;
     padding: 4px 8px;
     font-size: 0.75rem;
     font-weight: 600;
@@ -159,7 +212,7 @@
     color: #fff;
 }
 
-/* Text-only tags (breadcrumbs style) */
+/* Text-only tags */
 .text-tag {
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -172,28 +225,6 @@
     color: #ccc;
 }
 .text-tag:not(:first-child) { opacity: 0.9; }
-
-/* --- Meta Lists (Icons + Text) --- */
-.meta-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 25px 0;
-    width: 100%;
-    font-size: 0.9rem;
-}
-
-.meta-list li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.meta-list i {
-    width: 20px;
-    text-align: center;
-    color: var(--text-light);
-}
 
 /* --- Buttons --- */
 .btn {
@@ -213,6 +244,7 @@
 .btn.primary {
     background: var(--text-main);
     color: #fff;
+    border-color: var(--text-main);
 }
 
 .btn.primary:hover {
@@ -252,7 +284,17 @@
 
 .socials {
     display: flex;
-    gap: 20px;
-    font-size: 1.5rem;
+    justify-content: center;
+    gap: 25px;
+    margin-top: auto;
 }
-.socials a:hover { color: var(--accent); }
+
+.socials a {
+    font-size: 1.5rem;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.socials a:hover {
+    color: var(--accent);
+}

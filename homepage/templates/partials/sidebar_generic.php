@@ -1,6 +1,6 @@
-<aside class="sidebar-card padded">
-    <div class="sidebar-header">
-        <h3><?= htmlspecialchars($title ?? 'Filters') ?></h3>
+<aside class="card sidebar padded">
+    <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
+        <h3 style="margin: 0; font-family: var(--font-head);"><?= htmlspecialchars($title ?? 'Filters') ?></h3>
         <?php if (!empty($resetUrl)): ?>
             <a href="<?= htmlspecialchars($resetUrl) ?>" class="reset-link">Reset</a>
         <?php endif; ?>

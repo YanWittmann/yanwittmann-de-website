@@ -6,6 +6,11 @@
     max-width: 75ch;
 }
 
+/* Fix for top alignment */
+.prose > *:first-child {
+    margin-top: 0;
+}
+
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
     color: var(--text-main);
     font-family: var(--font-heading);

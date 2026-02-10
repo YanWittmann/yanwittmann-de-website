@@ -16,7 +16,7 @@ $renderer = new ContentRenderer();
 $router->set404(function () {
     header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
     View::render('404', [
-        'title' => 'Page Not Found',
+        'page_title' => 'Page Not Found',
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => '404']
@@ -29,13 +29,19 @@ $router->get('/', function () use ($db) {
     $projects = $db->query("SELECT * FROM homepage_projects ORDER BY featured DESC, created_at DESC LIMIT 4")->fetchAll();
     $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC LIMIT 3")->fetchAll();
 
+    $sidebar = View::getOutput('partials/sidebar_home', []);
+
     View::render('home', [
+        'page_title' => "Hi, I'm Yan!",
+        'page_subtitle' => 'SOFTWARE ENGINEER // 25 YEARS // @SKYBALL',
+        'page_intro' => "I build tools, websites, and games. While you're here, check out some of the projects below.",
         'projects' => $projects,
         'posts' => $posts,
+        'sidebar' => $sidebar,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/']
         ],
-        'extra_css' => ['/static/style/home.css', '/static/style/content.css']
+        'extra_css' => ['/static/style/home.css']
     ]);
 });
 
@@ -93,22 +99,24 @@ $router->get('/projects', function () use ($db) {
     ]);
 
     $pageTitle = 'All Projects';
+    $subtitle = 'A complete collection of my work, experiments, and open-source contributions.';
+
     if ($activeCategory) {
         $pageTitle = $activeCategory;
     } elseif ($activeTag) {
-        $pageTitle = 'Tagged: ' . $activeTag;
+        $pageTitle = $activeTag;
     }
 
     View::render('projects_list', [
-        'title' => $pageTitle,
-        'subtitle' => 'A complete collection of my work, experiments, and open-source contributions.',
+        'page_title' => $pageTitle,
+        'page_intro' => 'A complete collection of my work, experiments, and open-source contributions.',
         'projects' => $projects,
         'sidebar' => $sidebar,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'projects']
         ],
-        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
+        'extra_css' => ['/static/style/prose.css']
     ]);
 });
 
@@ -120,7 +128,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
     if (!$project) {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
         View::render('404', [
-            'title' => 'Project Not Found',
+            'page_title' => 'Project Not Found',
             'breadcrumbs' => [
                 ['label' => 'yanwittmann.de', 'url' => '/'],
                 ['label' => '404 Not Found']
@@ -137,16 +145,17 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
     ]);
 
     View::render('project_detail', [
-        'title' => $project['title'],
+        'page_title' => $project['title'],
+        'page_subtitle' => date('Y-m-d', strtotime($project['created_at'])) . ' // ' . ($project['category'] ?? 'Project'),
+        'page_intro' => $project['description'],
         'project' => $project,
         'sidebar' => $sidebar,
-        "page_size" => "1200",
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'projects', 'url' => '/projects'],
             ['label' => $project['title']]
         ],
-        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
+        'extra_css' => ['/static/style/prose.css']
     ]);
 });
 
@@ -155,14 +164,15 @@ $router->get('/blog', function () use ($db) {
     $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC")->fetchAll();
 
     View::render('blog_list', [
-        'title' => 'Latest Posts',
-        'subtitle' => 'Read my latest thoughts and updates.',
+        'page_title' => 'Latest Posts',
+        'page_subtitle' => 'BLOG // THOUGHTS',
+        'page_intro' => 'Read my latest thoughts and updates.',
         'posts' => $posts,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'blog']
         ],
-        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
+        'extra_css' => ['/static/style/prose.css']
     ]);
 });
 
@@ -174,7 +184,7 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
     if (!$post) {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
         View::render('404', [
-            'title' => 'Post Not Found',
+            'page_title' => 'Post Not Found',
             'breadcrumbs' => [
                 ['label' => 'yanwittmann.de', 'url' => '/'],
                 ['label' => '404 Not Found']
@@ -191,16 +201,17 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
     ]);
 
     View::render('blog_detail', [
-        'title' => $post['title'],
+        'page_title' => $post['title'],
+        'page_subtitle' => date('Y-m-d', strtotime($post['created_at'])),
+        'page_intro' => $post['description'],
         'post' => $post,
         'sidebar' => $sidebar,
-        "page_size" => "1100",
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'blog', 'url' => '/blog'],
             ['label' => $post['title']]
         ],
-        'extra_css' => ['/static/style/content.css', '/static/style/prose.css']
+        'extra_css' => ['/static/style/prose.css']
     ]);
 });
 

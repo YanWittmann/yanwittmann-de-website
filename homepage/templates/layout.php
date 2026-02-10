@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title ?? 'Yan Wittmann - Software Engineer') ?></title>
+    <title><?= htmlspecialchars($page_title ?? 'Yan Wittmann') ?></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&family=Roboto+Slab:wght@400;700&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/style/main.css">
     <link rel="stylesheet" href="/static/style/layout.css">
@@ -17,12 +16,6 @@
             <link rel="stylesheet" href="<?= htmlspecialchars($css_file) ?>">
         <?php endforeach; ?>
     <?php endif; ?>
-
-    <style>
-        .page-wrapper {
-            max-width: <?= ($page_size ?? "1200") . "px" ?>;
-        }
-    </style>
 </head>
 <body>
 <header class="top-nav-bar">
@@ -35,52 +28,47 @@
 </header>
 
 <div class="page-wrapper">
-    <?php if (isset($sidebar)): ?>
-        <!-- Grid Layout with Sidebar -->
-        <div class="layout-grid">
-            <div class="sidebar-column">
-                <?= $sidebar ?>
-            </div>
 
-            <main class="main-column">
-                <?php if (isset($title)): ?>
-                    <header class="main-header">
-                        <h1 style="margin: 0; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
-                            <?= $title ?>
-                        </h1>
-                        <?php if (isset($subtitle)): ?>
-                            <p class="intro-text">
-                                <?= $subtitle ?>
-                            </p>
-                        <?php endif; ?>
-                    </header>
-                <?php endif; ?>
-                <?= $content ?>
-            </main>
-        </div>
-    <?php else: ?>
-        <!-- Full-Width Layout -->
-        <?php if (isset($title)): ?>
-            <header class="main-header">
-                <h1 style="margin: 0; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
-                    <?= $title ?>
-                    <?php if (!empty($tags)): ?>
-                        <span class="tag-list inline">
-                        <?php foreach ($tags as $tag): ?>
-                            <span class="tag"><?= htmlspecialchars($tag) ?></span>
-                        <?php endforeach; ?>
-                    </span>
-                    <?php endif; ?>
-                </h1>
-                <?php if (isset($subtitle)): ?>
-                    <p class="intro-text">
-                        <?= $subtitle ?>
-                    </p>
-                <?php endif; ?>
-            </header>
-        <?php endif; ?>
-        <?= $content ?>
+    <?php if (isset($page_title)): ?>
+        <header class="page-header">
+            <h1 class="page-title"><?= $page_title ?></h1>
+            <?php
+            $has_subtitle = isset($page_subtitle);
+            $has_intro = isset($page_intro);
+
+            if ($has_subtitle && $has_intro) {
+                $order = $page_header_order ?? 'subtitle';
+
+                if ($order === 'subtitle') {
+                    echo '<div class="page-subtitle">' . $page_subtitle . '</div>';
+                    echo '<p class="intro-text">' . $page_intro . '</p>';
+                } else {
+                    echo '<p class="intro-text">' . $page_intro . '</p>';
+                    echo '<div class="page-subtitle">' . $page_subtitle . '</div>';
+                }
+            } elseif ($has_subtitle) {
+                echo '<div class="page-subtitle">' . $page_subtitle . '</div>';
+            } elseif ($has_intro) {
+                echo '<p class="intro-text">' . $page_intro . '</p>';
+            }
+            ?>
+        </header>
+
+        <hr class="layout-separator">
     <?php endif; ?>
+
+    <div class="layout-grid">
+        <main class="main-column">
+            <?= $content ?>
+        </main>
+
+        <?php if (!empty($sidebar)): ?>
+            <aside class="sidebar-column">
+                <?= $sidebar ?>
+            </aside>
+        <?php endif; ?>
+    </div>
+
 </div>
 
 <footer>

@@ -1,5 +1,5 @@
 <a href="/projects/<?= htmlspecialchars($project['slug']) ?>">
-    <article class="card shadow-hover" style="height: 100%;">
+    <article class="card shadow-hover">
         <header class="card-header">
             <h3 class="card-title">
                 <span class="card-square"></span>
@@ -17,7 +17,7 @@
         <?php endif; ?>
 
         <div class="card-content">
-            <p style="margin: 0 0 15px 0; line-height: 1.4; color: var(--text-main); flex-grow: 1;">
+            <p style="margin: 0 0 15px 0; line-height: 1.4; color: var(--text-main); flex-grow: 1; font-size: 0.95rem;">
                 <?= htmlspecialchars($project['description']) ?>
             </p>
 
