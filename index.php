@@ -165,7 +165,6 @@ $router->get('/blog', function () use ($db) {
 
     View::render('blog_list', [
         'page_title' => 'Latest Posts',
-        'page_subtitle' => 'BLOG // THOUGHTS',
         'page_intro' => 'Read my latest thoughts and updates.',
         'posts' => $posts,
         'breadcrumbs' => [

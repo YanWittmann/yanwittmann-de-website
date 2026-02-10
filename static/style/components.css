@@ -8,20 +8,17 @@
     height: 100%;
     text-decoration: none;
     color: inherit;
-    /* Default State: Hard Shadow present */
     box-shadow: 6px 6px 0 var(--accent);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 
 .card.shadow-hover:hover {
-    /* Lift up, shadow stays */
     transform: translateY(-4px);
     box-shadow: 6px 10px 0 var(--accent);
     z-index: 10;
 }
 
 .card.sidebar {
-    /* Sidebar also has the shadow */
     box-shadow: 6px 6px 0 var(--accent);
     height: fit-content;
 }
@@ -76,13 +73,13 @@
 }
 
 .card-content {
-    padding: 15px;
+    padding: 20px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-/* --- Section Anchors (01 // Projects) --- */
+/* --- Section Anchors --- */
 .section-anchor {
     display: flex;
     align-items: baseline;
@@ -108,6 +105,7 @@
     text-transform: uppercase;
 }
 
+/* Arrow transitions */
 .section-anchor .arrow {
     margin-left: auto;
     font-family: var(--font-mono);
@@ -116,61 +114,17 @@
     font-size: 0.9rem;
     color: var(--text-light);
 }
+
 .section-anchor .arrow i {
     transition: transform 0.2s;
 }
 
-/* Interaction: Icon moves right */
 .section-anchor:hover .arrow i {
     transform: translateX(5px);
-    color: var(--accent);
 }
 
 .section-anchor:hover .arrow {
     color: var(--accent);
-}
-
-/* --- Post Row Component --- */
-.post-row {
-    display: flex;
-    align-items: baseline;
-    padding: 15px;
-    gap: 20px;
-}
-
-.post-row .date {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--text-light);
-    min-width: 100px;
-    flex-shrink: 0;
-}
-
-.post-row .title {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    font-family: var(--font-head);
-    color: var(--text-main);
-}
-
-.post-row .desc {
-    margin: 5px 0 0 0;
-    font-size: 0.95rem;
-    color: var(--text-light);
-    line-height: 1.5;
-}
-
-@media (max-width: 650px) {
-    .post-row {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .post-row .date {
-        min-width: auto;
-        color: var(--accent);
-        font-size: 0.75rem;
-    }
 }
 
 /* --- Tags --- */
@@ -212,7 +166,6 @@
     color: #fff;
 }
 
-/* Text-only tags */
 .text-tag {
     font-family: var(--font-mono);
     font-size: 0.8rem;
