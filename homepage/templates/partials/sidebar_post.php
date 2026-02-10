@@ -1,8 +1,6 @@
-<aside class="sidebar-card">
+<aside class="card sidebar">
     <?php if (!empty($post['image'])): ?>
-        <div class="sidebar-img-container">
-            <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?> Cover" class="sidebar-img">
-        </div>
+        <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?> Cover" class="card-image">
     <?php endif; ?>
 
     <div style="padding: 20px;">
@@ -14,10 +12,8 @@
         </ul>
 
         <?php if (!empty($post['tags'])): ?>
-            <div class="tech-tags-sidebar">
-                <?php foreach ($post['tags'] as $tag): ?>
-                    <span class="tag"><?= htmlspecialchars($tag) ?></span>
-                <?php endforeach; ?>
+            <div style="margin-bottom: 25px;">
+                <?php \App\View::partial('tags_list', ['tags' => $post['tags']]); ?>
             </div>
         <?php endif; ?>
     </div>

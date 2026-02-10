@@ -1,5 +1,5 @@
-<div class="layout-grid">
-    <div class="intro-area">
+<div class="layout-grid home-variant">
+    <div class="home-intro">
         <header class="main-header">
             <h1>Hello, I'm Yan Wittmann</h1>
             <div class="subtitle">SOFTWARE ENGINEER // <?php
@@ -14,12 +14,12 @@
 
     <?php include __DIR__ . '/partials/sidebar_home.php'; ?>
 
-    <main class="content-area">
+    <main class="home-content">
         <div class="section-header">
             <a href="/projects" class="label"><span>01</span> // PROJECTS <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
-        <div class="project-list-grid">
+        <div class="cards-grid">
             <?php foreach ($projects as $project): ?>
                 <?php \App\View::partial('project_card', ['project' => $project]); ?>
             <?php endforeach; ?>
@@ -29,7 +29,7 @@
             <a href="/blog" class="label"><span>02</span> // LATEST POSTS <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
-        <div class="post-list-group">
+        <div class="list-group">
             <?php foreach ($posts as $post): ?>
                 <?php include __DIR__ . '/partials/post_row.php'; ?>
             <?php endforeach; ?>

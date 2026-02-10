@@ -7,12 +7,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&family=Roboto+Slab:wght@400;700&display=swap"
           rel="stylesheet">
+
     <link rel="stylesheet" href="/static/style/main.css">
+    <link rel="stylesheet" href="/static/style/layout.css">
+    <link rel="stylesheet" href="/static/style/components.css">
+
     <?php if (isset($extra_css)): ?>
         <?php foreach ($extra_css as $css_file): ?>
             <link rel="stylesheet" href="<?= htmlspecialchars($css_file) ?>">
         <?php endforeach; ?>
     <?php endif; ?>
+
     <style>
         .page-wrapper {
             max-width: <?= ($page_size ?? "1200") . "px" ?>;
@@ -31,8 +36,8 @@
 
 <div class="page-wrapper">
     <?php if (isset($sidebar)): ?>
-        <!-- Two-Column Grid Layout -->
-        <div class="content-grid">
+        <!-- Grid Layout with Sidebar -->
+        <div class="layout-grid">
             <div class="sidebar-column">
                 <?= $sidebar ?>
             </div>
@@ -54,15 +59,15 @@
             </main>
         </div>
     <?php else: ?>
-        <!-- Default Full-Width Layout -->
+        <!-- Full-Width Layout -->
         <?php if (isset($title)): ?>
             <header class="main-header">
                 <h1 style="margin: 0; padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
                     <?= $title ?>
                     <?php if (!empty($tags)): ?>
-                        <span class="content-tags" style="margin-left: 10px; font-size: 1rem;">
+                        <span class="tag-list inline">
                         <?php foreach ($tags as $tag): ?>
-                            <span class="content-tags-item"><?= htmlspecialchars($tag) ?></span>
+                            <span class="tag"><?= htmlspecialchars($tag) ?></span>
                         <?php endforeach; ?>
                     </span>
                     <?php endif; ?>

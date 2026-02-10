@@ -1,0 +1,100 @@
+.page-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    flex-grow: 1;
+    padding: 40px 20px;
+}
+
+/*
+   Unified Grid System
+   Used for both the Homepage and the Two-Column Sidebar layouts.
+*/
+.layout-grid {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    gap: var(--gap-size);
+    align-items: start;
+}
+
+.layout-grid.home-variant {
+    grid-template-rows: auto 1fr;
+}
+
+.sidebar-column {
+    grid-column: 1;
+    min-width: 0;
+}
+
+.main-column {
+    grid-column: 2;
+    min-width: 0;
+}
+
+/* Homepage specific positioning within the grid */
+.home-intro {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 20px;
+}
+
+.home-sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+.home-content {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* Card Grids (Projects/Posts list) */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* List Groups (Vertical lists) */
+.list-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Responsive Logic */
+@media (max-width: 850px) {
+    .layout-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-column, .main-column {
+        width: 100%;
+    }
+
+    .sidebar-column {
+        order: 2;
+        margin-top: 40px;
+    }
+
+    .main-column {
+        order: 1;
+    }
+
+    /* Homepage specific reordering */
+    .layout-grid.home-variant .home-intro {
+        order: 1;
+        margin-bottom: 10px;
+    }
+
+    .layout-grid.home-variant .home-sidebar {
+        order: 2;
+        margin-bottom: 40px;
+        margin-top: 0;
+    }
+
+    .layout-grid.home-variant .home-content {
+        order: 3;
+    }
+}

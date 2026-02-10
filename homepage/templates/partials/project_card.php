@@ -1,37 +1,32 @@
-<a href="/projects/<?= htmlspecialchars($project['slug']) ?>" class="project-card-link">
-    <article class="project-card">
+<a href="/projects/<?= htmlspecialchars($project['slug']) ?>">
+    <article class="card shadow-hover" style="height: 100%;">
         <header class="card-header">
-            <div class="card-title-group">
+            <h3 class="card-title">
                 <span class="card-square"></span>
-                <h3 class="card-title"><?= htmlspecialchars($project['title']) ?></h3>
-            </div>
-            <span class="card-date"><?= date('Y-m-d', strtotime($project['created_at'])) ?></span>
+                <?= htmlspecialchars($project['title']) ?>
+            </h3>
+            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-light);">
+                <?= date('Y-m-d', strtotime($project['created_at'])) ?>
+            </span>
         </header>
 
         <?php if (isset($project['image'])): ?>
-            <div class="card-image-container">
-                <img src="<?= htmlspecialchars($project['image']) ?>"
-                     alt="<?= htmlspecialchars($project['title']) ?> cover image" loading="lazy">
-            </div>
+            <img src="<?= htmlspecialchars($project['image']) ?>"
+                 alt="<?= htmlspecialchars($project['title']) ?>"
+                 class="card-image small" loading="lazy">
         <?php endif; ?>
 
         <div class="card-content">
-            <p class="card-description">
+            <p style="margin: 0 0 15px 0; line-height: 1.4; color: var(--text-main); flex-grow: 1;">
                 <?= htmlspecialchars($project['description']) ?>
             </p>
 
             <?php
             $tags = [];
             if (isset($project['category'])) $tags[] = $project['category'];
-            $tags = array_merge($tags, isset($project['tags']) ? (is_array($project['tags']) ? $project['tags'] : json_decode($project['tags'], true)) : []);
+            $tags = array_merge($tags, parse_json_list($project['tags'] ?? []));
             ?>
-            <?php if (!empty($tags)): ?>
-                <div class="content-tags">
-                    <?php foreach ($tags as $tag): ?>
-                        <span class="content-tags-item"><?= htmlspecialchars($tag) ?></span>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+            <?php \App\View::partial('tags_list', ['tags' => $tags, 'style' => 'text']); ?>
         </div>
     </article>
 </a>

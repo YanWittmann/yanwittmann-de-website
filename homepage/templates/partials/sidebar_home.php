@@ -1,4 +1,4 @@
-<aside class="sidebar-card sidebar-card-home">
+<aside class="card sidebar padded center home-sidebar">
     <img src="/static/img/profile-picture-yan.webp" class="profile-pic" alt="Profile">
 
     <ul class="meta-list">
@@ -7,18 +7,9 @@
         <li><i class="fa-regular fa-clock"></i> <span><?= (new DateTime("now", new DateTimeZone("Europe/Berlin")))->format('g:i A T') ?></span></li>
     </ul>
 
-    <div class="tech-stack">
-        <h3>Tech Stack</h3>
-        <div class="tech-tags-sidebar">
-            <span class="tag">Java</span>
-            <span class="tag">Maven</span>
-            <span class="tag">Python</span>
-            <span class="tag">React</span>
-            <span class="tag">TypeScript</span>
-            <span class="tag">PHP</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Markdown</span>
-        </div>
+    <div style="width: 100%; text-align: left; margin-bottom: 25px;">
+        <h3 style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; margin-top:0;">Tech Stack</h3>
+        <?php \App\View::partial('tags_list', ['tags' => ['Java', 'Maven', 'Python', 'React', 'TypeScript', 'PHP', 'SQL', 'Markdown']]); ?>
     </div>
 
     <div class="socials">

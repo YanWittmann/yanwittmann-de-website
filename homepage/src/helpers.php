@@ -17,3 +17,16 @@ if (!function_exists('generate_breadcrumbs')) {
         echo '</div>';
     }
 }
+
+if (!function_exists('parse_json_list')) {
+    function parse_json_list($data): array {
+        if (is_array($data)) {
+            return $data;
+        }
+        if (empty($data)) {
+            return [];
+        }
+        $decoded = json_decode($data, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+}

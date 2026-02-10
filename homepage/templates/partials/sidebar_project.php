@@ -1,8 +1,6 @@
-<aside class="sidebar-card">
+<aside class="card sidebar">
     <?php if (!empty($project['image'])): ?>
-        <div class="sidebar-img-container">
-            <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?> Cover" class="sidebar-img">
-        </div>
+        <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?> Cover" class="card-image">
     <?php endif; ?>
 
     <div style="padding: 20px;">
@@ -20,18 +18,17 @@
         </ul>
 
         <?php if (!empty($project['tags'])): ?>
-            <div class="tech-tags-sidebar">
-                <?php foreach ($project['tags'] as $tag): ?>
-                    <span class="tag"><?= htmlspecialchars($tag) ?></span>
-                <?php endforeach; ?>
+            <div style="margin-bottom: 25px;">
+                <?php \App\View::partial('tags_list', ['tags' => $project['tags']]); ?>
             </div>
         <?php endif; ?>
 
-        <?php if (!empty($project['links'])): ?>
-            <div class="action-btn-group">
-                <?php foreach ($project['links'] as $link): ?>
+        <?php $links = parse_json_list($project['links'] ?? []); ?>
+        <?php if (!empty($links)): ?>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <?php foreach ($links as $link): ?>
                     <a href="<?= htmlspecialchars($link['url']) ?>"
-                       class="action-btn <?= ($link['style'] ?? 'primary') === 'primary' ? 'primary' : 'secondary' ?>"
+                       class="btn <?= ($link['style'] ?? 'primary') === 'primary' ? 'primary' : 'secondary' ?>"
                        target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($link['icon'])): ?>
                             <i class="<?= htmlspecialchars($link['icon']) ?>"></i>
