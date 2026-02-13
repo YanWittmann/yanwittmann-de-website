@@ -6,7 +6,6 @@
     <title><?= htmlspecialchars($page_title ?? 'Yan Wittmann') ?></title>
     <meta name="description" content="Explore the portfolio of Yan Wittmann, a software engineer with a passion for game and web development.">
     <meta name="author" content="Yan Wittmann">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/static/style/main.css">

@@ -1,8 +1,8 @@
 <?php
 $tech_stack = [
-        'Languages' => ['Java', 'Python', 'PHP', 'TypeScript', 'SQL', 'C#'],
-        'Frameworks' => ['React', 'Spring Boot', 'JNA', 'Unity'],
-        'Tools' => ['Docker', 'Git', 'Maven', 'Gradle', 'Linux']
+        'Languages' => ['Java', 'Python', 'TypeScript', 'PHP', 'C#', 'SQL'],
+        'Frameworks' => ['React', 'Spring Boot'],
+        'Other' => ['Godot']
 ];
 ?>
 <aside class="card sidebar padded center">

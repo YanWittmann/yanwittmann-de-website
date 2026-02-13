@@ -259,6 +259,14 @@
     transition: color 0.2s;
 }
 
+.socials svg {
+    width: 1.3em;
+}
+
+.socials .icon-linkedin {
+    width: 1.1em;
+}
+
 .socials a:hover {
     color: var(--accent);
 }

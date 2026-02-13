@@ -49,7 +49,7 @@ if (!function_exists('icon')) {
 
         $svg = $icons[$name] ?? $icons['code'];
 
-        $class = $class . " icon";
+        $class = $class . " icon-" . $name . " icon";
         $svg = str_replace('<svg ', '<svg class="' . htmlspecialchars($class) . '" ', $svg);
         if ($style) {
             $svg = str_replace('<svg ', '<svg style="' . htmlspecialchars($style) . '" ', $svg);

@@ -40,8 +40,7 @@ $router->get('/', function () use ($db) {
         'sidebar' => $sidebar,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/']
-        ],
-        'extra_css' => ['/static/style/home.css']
+        ]
     ]);
 });
 
