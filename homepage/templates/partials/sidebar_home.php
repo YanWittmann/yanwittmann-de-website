@@ -19,7 +19,7 @@ $tech_stack = [
     <div style="width: 100%; text-align: left; border-top: 1px solid #eee; padding-top: 20px; margin-bottom: 10px;">
         <?php foreach ($tech_stack as $category => $tags): ?>
             <div style="margin-bottom: 15px;">
-                <h4 style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin: 0 0 8px 0; text-transform: uppercase;">
+                <h4 style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-main); margin: 0 0 8px 0; text-transform: uppercase;">
                     <?= htmlspecialchars($category) ?>
                 </h4>
                 <?php \App\View::partial('tags_list', ['tags' => $tags]); ?>

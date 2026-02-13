@@ -18,7 +18,7 @@
     <span class="arrow">VIEW ALL <i class="fa-solid fa-arrow-right"></i></span>
 </a>
 
-<div class="list-group">
+<div class="blog-list-group">
     <?php foreach ($posts as $post): ?>
         <?php include __DIR__ . '/partials/post_row.php'; ?>
     <?php endforeach; ?>

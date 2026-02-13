@@ -1,27 +1,46 @@
-<a href="/blog/<?= htmlspecialchars($post['slug']) ?>" style="text-decoration: none;">
-    <article class="card shadow-hover" style="padding: 20px; height: auto; border-bottom: 1px solid var(--border-color);">
-        <div style="display: flex; flex-direction: column; gap: 5px;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px;">
-                <h3 style="margin: 0; font-family: var(--font-head); font-size: 1.15rem; color: var(--text-main);">
-                    <?= htmlspecialchars($post['title']) ?>
-                </h3>
-                <time style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); font-weight: bold;">
-                    <?= date('Y-m-d', strtotime($post['created_at'])) ?>
-                </time>
-            </div>
+<?php
+$hasImage = !empty($post['image']);
+$tags = isset($post['tags']) ? parse_json_list($post['tags']) : [];
+?>
 
-            <?php if (!empty($post['description'])): ?>
-                <p style="margin: 5px 0 0 0; font-size: 0.95rem; color: var(--text-light); line-height: 1.5;">
-                    <?= htmlspecialchars($post['description']) ?>
-                </p>
-            <?php endif; ?>
+<a href="/blog/<?= htmlspecialchars($post['slug']) ?>" class="blog-row">
+    <article class="card shadow-hover">
 
-            <?php $tags = parse_json_list($post['tags'] ?? []); ?>
-            <?php if (!empty($tags)): ?>
-                <div style="margin-top: 12px;">
-                    <?php \App\View::partial('tags_list', ['tags' => $tags, 'style' => 'text']); ?>
+        <div class="blog-row-img-col">
+            <?php if ($hasImage): ?>
+                <img src="<?= htmlspecialchars($post['image']) ?>"
+                     alt="<?= htmlspecialchars($post['title']) ?>"
+                     loading="lazy">
+            <?php else: ?>
+                <div class="blog-row-icon-placeholder">
+                    <i class="fa-solid fa-code"></i>
                 </div>
             <?php endif; ?>
         </div>
+
+        <div class="blog-row-content-col">
+            <header class="card-header blog-row-header">
+                <h3 class="card-title">
+                    <span class="card-square"></span>
+                    <?= htmlspecialchars($post['title']) ?>
+                </h3>
+                <span class="blog-row-date">
+                    <?= date('Y-m-d', strtotime($post['created_at'])) ?>
+                </span>
+            </header>
+
+            <div class="blog-row-body">
+                <p class="blog-row-desc">
+                    <?= !empty($post['description']) ? htmlspecialchars($post['description']) : 'No description available.' ?>
+                </p>
+
+                <?php if (!empty($tags)): ?>
+                    <div class="blog-row-tags">
+                        <?php \App\View::partial('tags_list', ['tags' => $tags, 'style' => 'text']); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
     </article>
 </a>

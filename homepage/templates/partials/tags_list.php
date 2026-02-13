@@ -7,7 +7,6 @@ $style = $style ?? 'tag'; // 'tag', 'pill', 'text'
         <?php foreach ($tags as $tag): ?>
             <?php if ($style === 'pill'): ?>
                 <?php
-                // Logic to support active state passed via complex array in pills
                 $label = is_array($tag) ? $tag['label'] : $tag;
                 $url = is_array($tag) ? $tag['url'] : '#';
                 $active = is_array($tag) && !empty($tag['active']) ? 'active' : '';

@@ -2,7 +2,7 @@
     --accent: #b61c52;
     --text-main: #2f2f2f;
     --text-light: #555;
-    --text-muted: #666;
+    --text-muted: #777;
     --border-color: #2f2f2f;
     --bg-light: #f8f9fa;
     --bg-card: #ffffff;
@@ -10,9 +10,6 @@
     --font-head: 'Roboto Slab', serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-
-    --sidebar-width: 300px;
-    --gap-size: 50px;
 }
 
 *, *::before, *::after {
