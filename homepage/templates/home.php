@@ -1,7 +1,7 @@
 <a href="/projects" class="section-anchor">
     <span class="num">01</span>
     <span class="label">// PROJECTS</span>
-    <span class="arrow">VIEW ALL <i class="fa-solid fa-arrow-right"></i></span>
+    <span class="arrow">VIEW ALL <?= icon('arrow-right') ?></span>
 </a>
 
 <div class="cards-grid">
@@ -15,7 +15,7 @@
 <a href="/blog" class="section-anchor">
     <span class="num">02</span>
     <span class="label">// LATEST POSTS</span>
-    <span class="arrow">VIEW ALL <i class="fa-solid fa-arrow-right"></i></span>
+    <span class="arrow">VIEW ALL <?= icon('arrow-right') ?></span>
 </a>
 
 <div class="blog-list-group">

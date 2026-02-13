@@ -13,7 +13,7 @@ $tags = isset($post['tags']) ? parse_json_list($post['tags']) : [];
                      loading="lazy">
             <?php else: ?>
                 <div class="blog-row-icon-placeholder">
-                    <i class="fa-solid fa-code"></i>
+                    <?= icon('code') ?>
                 </div>
             <?php endif; ?>
         </div>

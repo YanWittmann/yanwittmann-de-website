@@ -195,23 +195,28 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
     $post['tags'] = json_decode($post['tags'] ?? '[]', true);
     $post['content'] = $renderer->render($post['content'], (bool)$post['is_markdown']);
 
-    $sidebar = View::getOutput('partials/sidebar_post', [
-        'post' => $post
-    ]);
-
-    View::render('blog_detail', [
+    $props = [
         'page_title' => $post['title'],
         'page_subtitle' => date('Y-m-d', strtotime($post['created_at'])),
         'page_intro' => $post['description'],
+        'page_header_order' => "intro",
         'post' => $post,
-        'sidebar' => $sidebar,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'blog', 'url' => '/blog'],
             ['label' => $post['title']]
         ],
         'extra_css' => ['/static/style/prose.css']
-    ]);
+    ];
+
+    if (isset($post['image'])) {
+        $sidebar = View::getOutput('partials/sidebar_post', [
+            'post' => $post
+        ]);
+        $props['sidebar'] = $sidebar;
+    }
+
+    View::render('blog_detail', $props);
 });
 
 $router->run();

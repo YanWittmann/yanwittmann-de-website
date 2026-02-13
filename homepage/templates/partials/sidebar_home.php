@@ -28,8 +28,8 @@ $tech_stack = [
     </div>
 
     <div class="socials">
-        <a href="https://github.com/YanWittmann"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/yan-wittmann-b6a8562a9/"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://youtube.com/c/@Skyball"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://github.com/YanWittmann" aria-label="Link to the GitHub account of Yan Wittmann"><?= icon('github') ?></a>
+        <a href="https://www.linkedin.com/in/yan-wittmann-b6a8562a9/" aria-label="Link to the LinkedIn account of Yan Wittmann"><?= icon('linkedin') ?></a>
+        <a href="https://youtube.com/c/@Skyball" aria-label="Link to the YouTube account of Yan Wittmann"><?= icon('youtube') ?></a>
     </div>
 </aside>

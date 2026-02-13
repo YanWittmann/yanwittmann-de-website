@@ -18,7 +18,7 @@
                        class="btn <?= ($link['style'] ?? 'primary') === 'primary' ? 'primary' : 'secondary' ?>"
                        target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($link['icon'])): ?>
-                            <i class="<?= htmlspecialchars($link['icon']) ?>"></i>
+                            <?= icon($link['icon'], '', 'height: 1em;') ?>
                         <?php endif; ?>
                         <?= htmlspecialchars($link['label']) ?>
                     </a>
