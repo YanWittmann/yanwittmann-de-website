@@ -27,14 +27,16 @@ $router->set404(function () {
 // Homepage
 $router->get('/', function () use ($db) {
     $projects = $db->query("SELECT * FROM homepage_projects ORDER BY featured DESC, created_at DESC LIMIT 4")->fetchAll();
-    $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC LIMIT 3")->fetchAll();
+    $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC LIMIT 4")->fetchAll();
 
     $sidebar = View::getOutput('partials/sidebar_home', []);
+    $sidebar .= View::getOutput('partials/sidebar_draw', []);
+    $age = (new DateTime("2000-05-07"))->diff(new DateTime())->y;
 
     View::renderLayout('home', [
         'page_title' => "Hi, I'm Yan!",
-        'page_subtitle' => 'SOFTWARE ENGINEER // 25 YEARS // @SKYBALL',
-        'page_intro' => "I build tools, websites, and games. While you're here, check out some of the projects below.",
+        'page_subtitle' => 'SOFTWARE ENGINEER // ' . $age . ' YEARS // @SKYBALL',
+        'page_intro' => "I build tools, websites, and games. While you're here, check out some of my projects below.",
         'projects' => $projects,
         'posts' => $posts,
         'sidebar' => $sidebar,
@@ -218,7 +220,7 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
     View::renderLayout('blog_detail', $props);
 });
 
-$router->get('/pages(/.*)?', function($path = '/') use ($db) {
+$router->get('/pages(/.*)?', function ($path = '/') use ($db) {
     $path = trim($path, '/');
     $baseDir = __DIR__ . '/homepage/pages/';
     $targetPath = realpath($baseDir . $path);
@@ -267,6 +269,52 @@ $router->get('/pages(/.*)?', function($path = '/') use ($db) {
             ]
         ]);
     }
+});
+
+// API: Guestbook Submission
+$router->post('/api/guestbook', function () use ($db) {
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    $author = isset($input['author']) ? substr(strip_tags(trim($input['author'])), 0, 100) : 'Anonymous';
+    $note = isset($input['note']) ? substr(strip_tags(trim($input['note'])), 0, 255) : '';
+    $image = $input['image'] ?? '';
+
+    if (empty($author)) {
+        $author = 'Anonymous';
+    }
+
+    // Basic validation for image data
+    if (strpos($image, 'data:image/png;base64') === 0) {
+        $db->query(
+            "INSERT INTO homepage_guestbook (author, note, image_data) VALUES (?, ?, ?)",
+            [$author, $note, $image]
+        );
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+    } else {
+        header('HTTP/1.1 400 Bad Request');
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Invalid image data']);
+    }
+});
+
+$router->get('/api/guestbook/view', function () use ($db) {
+    if (!isset($_GET['auth']) || $_GET['auth'] !== 'yan') {
+        die("What are you doing here?");
+    }
+
+    $messages = $db->query("SELECT * FROM homepage_guestbook ORDER BY created_at DESC")->fetchAll();
+    View::renderLayout('view_submissions', [
+        'page_title' => 'Submissions',
+        'page_intro' => 'Showing ' . count($messages) . ' entries below',
+        'messages' => $messages,
+        'breadcrumbs' => [
+            ['label' => 'yanwittmann.de', 'url' => '/'],
+            ['label' => 'guestbook'],
+            ['label' => "Submissions"]
+        ],
+        'extra_css' => ['/static/style/prose.css', '/static/style/components.css']
+    ]);
 });
 
 $router->run();

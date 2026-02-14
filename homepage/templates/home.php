@@ -10,7 +10,7 @@
     <?php endforeach; ?>
 </div>
 
-<div style="margin-top: 40px;"></div>
+<div style="margin-top: 50px;"></div>
 
 <a href="/blog" class="section-anchor">
     <span class="num">02</span>
@@ -28,12 +28,18 @@
 
 <span class="section-anchor">
     <span class="num">03</span>
-    <span class="label">// MORE PAGES</span>
+    <span class="label">// MORE STUFFS</span>
 </span>
 
 <div class="blog-list-group">
     <?php
     $more_pages = [
+            [
+                    "title" => "Minecraft Projects",
+                    "url" => "https://www.planetminecraft.com/member/skyball",
+                    "image" => "/content/img/mcgrass.webp",
+                    "description" => "When I started programming, I created a lot of minecraft creations. You can find all of them on Planet Minecraft.",
+            ],
             [
                     "title" => "Blender Renders",
                     "url" => "/pages/blender/",
