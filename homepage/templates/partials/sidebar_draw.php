@@ -3,139 +3,137 @@ $guestbook_colors = [
         '#b61c52', '#d94f4f', '#ea9b3e', '#4caf50', '#4a90e2', '#9013fe', '#2f2f2f', '#ffffff',
 ];
 ?>
+
+<style>
+    /* --- Draw Widget --- */
+    .guestbook-accordion {
+        height: fit-content;
+    }
+
+    .guestbook-accordion .expandable-content {
+        max-height: 0;
+        transition: max-height 0.4s ease-out;
+        background: #fff;
+        overflow: hidden;
+    }
+
+    .guestbook-accordion.open .expandable-content {
+        max-height: 800px;
+    }
+
+    .guestbook-accordion .arrow-icon {
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+        color: var(--text-light);
+    }
+
+    .guestbook-accordion.open .arrow-icon {
+        transform: rotate(180deg);
+        color: var(--accent);
+    }
+
+    .guestbook-input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid var(--border-color);
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        background: #fff;
+        border-radius: 0;
+    }
+
+    .guestbook-input:focus {
+        outline: 2px solid var(--accent);
+        border-color: var(--accent);
+    }
+
+    .guestbook-textarea {
+        resize: none;
+        height: 60px;
+        font-family: var(--font-body);
+    }
+
+    .guestbook-canvas-container {
+        width: 100%;
+        border: 1px dashed var(--text-light);
+        margin-bottom: 8px;
+        background: #fff;
+        position: relative;
+        line-height: 0;
+    }
+
+    .guestbook-canvas {
+        display: block;
+        width: 100%;
+        touch-action: none;
+        cursor: crosshair;
+    }
+
+    .guestbook-clear-btn {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        z-index: 10;
+        width: 24px;
+        height: 24px;
+        background: rgba(255, 255, 255);
+        border: 1px solid var(--border-color);
+        font-size: 16px;
+        line-height: 22px;
+        text-align: center;
+        cursor: pointer;
+        color: var(--text-main);
+        font-family: sans-serif;
+        padding: 0;
+    }
+
+    .guestbook-clear-btn:hover {
+        background: white;
+        color: var(--accent);
+        border-color: var(--accent);
+    }
+
+    .guestbook-color-palette {
+        display: grid;
+        grid-template-columns: repeat(<?= count($guestbook_colors) ?>, 1fr);
+        gap: 5px;
+        margin-bottom: 8px;
+    }
+
+    .guestbook-color-swatch {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border: 2px solid var(--border-color);
+        cursor: pointer;
+        position: relative;
+        background-color: #fff;
+        padding: 0;
+    }
+
+    .guestbook-color-swatch:hover {
+        border-color: var(--accent);
+    }
+
+    .guestbook-color-swatch.active::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        right: -5px;
+        border: 2px solid var(--border-color);
+        background: var(--accent);
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+    }
+</style>
+
 <aside id="guestbook-widget" class="card sidebar guestbook-accordion" style="margin-top: 28px;">
-    <style>
-
-        /* --- Draw Widget --- */
-        .guestbook-accordion {
-            height: fit-content;
-        }
-
-        .guestbook-accordion .expandable-content {
-            max-height: 0;
-            transition: max-height 0.4s ease-out;
-            background: #fff;
-            overflow: hidden;
-        }
-
-        .guestbook-accordion.open .expandable-content {
-            max-height: 800px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .guestbook-accordion .arrow-icon {
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
-            color: var(--text-light);
-        }
-
-        .guestbook-accordion.open .arrow-icon {
-            transform: rotate(180deg);
-            color: var(--accent);
-        }
-
-        .guestbook-input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 8px;
-            border: 1px solid var(--border-color);
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            background: #fff;
-            border-radius: 0;
-        }
-
-        .guestbook-input:focus {
-            outline: 2px solid var(--accent);
-            border-color: var(--accent);
-        }
-
-        .guestbook-textarea {
-            resize: none;
-            height: 60px;
-            font-family: var(--font-body);
-        }
-
-        .guestbook-canvas-container {
-            width: 100%;
-            border: 1px dashed var(--text-light);
-            margin-bottom: 8px;
-            background: #fff;
-            position: relative;
-            line-height: 0;
-        }
-
-        .guestbook-canvas {
-            display: block;
-            width: 100%;
-            touch-action: none;
-            cursor: crosshair;
-        }
-
-        .guestbook-clear-btn {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            z-index: 10;
-            width: 24px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            font-size: 16px;
-            line-height: 22px;
-            text-align: center;
-            cursor: pointer;
-            color: #555;
-            font-family: sans-serif;
-            padding: 0;
-        }
-
-        .guestbook-clear-btn:hover {
-            background: white;
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .guestbook-color-palette {
-            display: grid;
-            grid-template-columns: repeat(<?= count($guestbook_colors) ?>, 1fr);
-            gap: 5px;
-            margin-bottom: 8px;
-        }
-
-        .guestbook-color-swatch {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            border: 2px solid var(--border-color);
-            cursor: pointer;
-            position: relative;
-            background-color: #fff;
-            padding: 0;
-        }
-
-        .guestbook-color-swatch:hover {
-            border-color: var(--accent);
-        }
-
-        .guestbook-color-swatch.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            right: -5px;
-            border: 2px solid var(--border-color);
-            background: var(--accent);
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-        }
-    </style>
-
     <!-- Accordion Header -->
     <div class="card-header" style="cursor: pointer;" onclick="toggleGuestbook()">
         <h3 class="card-title">
             <span class="card-square"></span>
-            Guestbook
+            Leave a Sketch for me!
         </h3>
         <span id="guestbook-arrow" class="arrow-icon">▼</span>
     </div>
@@ -146,6 +144,7 @@ $guestbook_colors = [
 
             <div class="guestbook-canvas-container">
                 <canvas id="gb-canvas" height="180"></canvas>
+                <button type="button" id="gb-clear" class="guestbook-clear-btn" title="Clear Canvas">&times;</button>
             </div>
 
             <div id="gb-color-palette" class="guestbook-color-palette">
@@ -158,13 +157,10 @@ $guestbook_colors = [
 
             <input type="text" id="gb-author" class="guestbook-input" placeholder="Your Name" maxlength="50">
             <textarea id="gb-note" class="guestbook-input guestbook-textarea" placeholder="Leave a note..."
-                      maxlength="200"></textarea>
+                      maxlength="255"></textarea>
 
             <div style="display: flex; gap: 8px;">
-                <button type="button" id="gb-clear" class="btn secondary"
-                        style="flex-grow: 1; padding: 6px; font-size: 0.8rem;">Clear
-                </button>
-                <button type="button" id="gb-send" class="btn primary" style="flex-grow: 2;">Send Entry</button>
+                <button type="button" id="gb-send" class="btn primary" style="width: 100%;">Send Entry :)</button>
             </div>
 
             <div id="gb-status"
@@ -191,19 +187,13 @@ $guestbook_colors = [
             };
 
             // --- 2. Canvas Logic ---
-            // Resize canvas to match container width dynamically
             function resizeCanvas() {
                 const rect = canvas.parentElement.getBoundingClientRect();
                 if (rect.width > 0 && canvas.width !== rect.width) {
-                    // Save content before resize? Not strictly needed if closed, but good practice
-                    // For now simple reset on resize to keep coordinate system simple
                     canvas.width = rect.width;
                 }
             }
 
-            // Initial sizing
-            // We need a slight delay or check because if it's display:none/height:0 it might be 0
-            // But since max-height animates, width is usually present.
             setTimeout(resizeCanvas, 100);
             window.addEventListener('resize', resizeCanvas);
 
@@ -226,7 +216,6 @@ $guestbook_colors = [
             }
 
             function start(e) {
-                // If accordion is closed, don't draw (edge case)
                 if (!widget.classList.contains('open')) return;
 
                 isDrawing = true;
@@ -234,13 +223,14 @@ $guestbook_colors = [
                 lastX = coords.x;
                 lastY = coords.y;
 
-                // Draw a dot
+                // Ensure full opacity for the starting dot
+                ctx.globalAlpha = 1.0;
                 ctx.fillStyle = currentColor;
                 ctx.beginPath();
-                ctx.arc(lastX, lastY, 1, 0, Math.PI * 2);
+                ctx.arc(lastX, lastY, currentColor === '#ffffff' ? 3 : 1, 0, Math.PI * 2);
                 ctx.fill();
 
-                e.preventDefault(); // Prevent scrolling on touch
+                e.preventDefault();
             }
 
             function move(e) {
@@ -248,23 +238,53 @@ $guestbook_colors = [
                 e.preventDefault();
 
                 const coords = getCoords(e);
-                if (currentColor === '#ffffff') {
-                    ctx.lineWidth = 6;
-                } else {
-                    ctx.lineWidth = 3;
-                }
+                const isEraser = currentColor === '#ffffff';
 
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
-                ctx.lineTo(coords.x, coords.y);
-                ctx.stroke();
+
+                if (isEraser) {
+                    // Eraser: standard, consistent thick line
+                    ctx.lineWidth = 10;
+                    ctx.globalAlpha = 1.0;
+                    ctx.strokeStyle = currentColor;
+                    ctx.lineTo(coords.x, coords.y);
+                    ctx.stroke();
+                } else {
+                    // Brush: Organic / Sketchy / Wiggly
+                    // 1. Vary width slightly per segment
+                    ctx.lineWidth = 3 + (Math.random() * 0.5);
+
+                    // 2. Vary opacity per segment (simulating pressure/ink flow)
+                    ctx.globalAlpha = 0.5 + Math.random() * 0.5;
+
+                    ctx.strokeStyle = currentColor;
+
+                    // 3. Jittery Curve (Displacement + Wiggle)
+                    // Instead of a straight line, draw a curve to the new point
+                    // utilizing a control point that is slightly offset from the midpoint.
+                    const midX = (lastX + coords.x) / 2;
+                    const midY = (lastY + coords.y) / 2;
+
+                    // Jitter amount (higher = more wiggly)
+                    const jitter = 5;
+                    const jitterX = Math.random() * jitter - (jitter / 2);
+                    const jitterY = Math.random() * jitter - (jitter / 2);
+
+                    ctx.quadraticCurveTo(midX + jitterX, midY + jitterY, coords.x, coords.y);
+                    ctx.stroke();
+                }
 
                 lastX = coords.x;
                 lastY = coords.y;
+
+                // Reset alpha to avoid affecting other drawing operations
+                ctx.globalAlpha = 1.0;
             }
 
             function stop() {
                 isDrawing = false;
+                ctx.globalAlpha = 1.0;
             }
 
             canvas.addEventListener('mousedown', start);
@@ -297,7 +317,6 @@ $guestbook_colors = [
                 const author = document.getElementById('gb-author').value.trim();
                 const note = document.getElementById('gb-note').value.trim();
 
-                // Check for empty canvas
                 const blank = document.createElement('canvas');
                 blank.width = canvas.width;
                 blank.height = canvas.height;
@@ -330,13 +349,9 @@ $guestbook_colors = [
                         if (data.success) {
                             statusDiv.style.color = 'green';
                             statusDiv.textContent = 'Thanks for your entry!';
-
-                            // Clear form
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
                             document.getElementById('gb-note').value = '';
                             document.getElementById('gb-author').value = '';
-
-                            // Close after a moment
                             setTimeout(() => {
                                 widget.classList.remove('open');
                                 statusDiv.textContent = '';
