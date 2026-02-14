@@ -187,10 +187,16 @@ $guestbook_colors = [
             };
 
             // --- 2. Canvas Logic ---
+            function fillWhite() {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
             function resizeCanvas() {
                 const rect = canvas.parentElement.getBoundingClientRect();
                 if (rect.width > 0 && canvas.width !== rect.width) {
                     canvas.width = rect.width;
+                    fillWhite();
                 }
             }
 
@@ -309,7 +315,7 @@ $guestbook_colors = [
 
             // --- 3. Controls ---
             btnClear.addEventListener('click', () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                fillWhite();
             });
 
             // --- 4. Send Logic ---
@@ -320,6 +326,10 @@ $guestbook_colors = [
                 const blank = document.createElement('canvas');
                 blank.width = canvas.width;
                 blank.height = canvas.height;
+                const bCtx = blank.getContext('2d');
+                bCtx.fillStyle = '#ffffff';
+                bCtx.fillRect(0, 0, blank.width, blank.height);
+
                 if (canvas.toDataURL() === blank.toDataURL()) {
                     statusDiv.style.color = 'var(--accent)';
                     statusDiv.textContent = 'Please draw something!';
@@ -349,7 +359,7 @@ $guestbook_colors = [
                         if (data.success) {
                             statusDiv.style.color = 'green';
                             statusDiv.textContent = 'Thanks for your entry!';
-                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            fillWhite();
                             document.getElementById('gb-note').value = '';
                             document.getElementById('gb-author').value = '';
                             setTimeout(() => {
@@ -367,7 +377,7 @@ $guestbook_colors = [
                     })
                     .finally(() => {
                         btnSend.disabled = false;
-                        btnSend.textContent = 'Send Entry';
+                        btnSend.textContent = 'Send Entry :)';
                     });
             });
 

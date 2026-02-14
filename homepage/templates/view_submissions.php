@@ -15,13 +15,15 @@
                 </h3>
                 <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-light);">
                         <?= date('Y-m-d H:i', strtotime($msg['created_at'])) ?>
-                    </span>
+                </span>
             </header>
 
             <?php if (!empty($msg['image_data'])): ?>
                 <!-- Base64 Image -->
-                <img src="<?= htmlspecialchars($msg['image_data']) ?>"
-                     alt="Drawing by <?= htmlspecialchars($msg['author']) ?>" loading="lazy">
+                <a href="<?= htmlspecialchars($msg['image_data']) ?>" download="sketch-<?= $msg['id'] ?>.png">
+                    <img src="<?= htmlspecialchars($msg['image_data']) ?>" loading="lazy"
+                         alt="Drawing by <?= htmlspecialchars($msg['author']) ?>" style="width: 100%; display: block;">
+                </a>
             <?php endif; ?>
 
             <?php if (!empty($msg['note'])): ?>
