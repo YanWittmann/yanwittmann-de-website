@@ -15,7 +15,7 @@ $renderer = new ContentRenderer();
 
 $router->set404(function () {
     header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
-    View::render('404', [
+    View::renderLayout('404', [
         'page_title' => 'Page Not Found',
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
@@ -31,7 +31,7 @@ $router->get('/', function () use ($db) {
 
     $sidebar = View::getOutput('partials/sidebar_home', []);
 
-    View::render('home', [
+    View::renderLayout('home', [
         'page_title' => "Hi, I'm Yan!",
         'page_subtitle' => 'SOFTWARE ENGINEER // 25 YEARS // @SKYBALL',
         'page_intro' => "I build tools, websites, and games. While you're here, check out some of the projects below.",
@@ -106,7 +106,7 @@ $router->get('/projects', function () use ($db) {
         $pageTitle = $activeTag;
     }
 
-    View::render('projects_list', [
+    View::renderLayout('projects_list', [
         'page_title' => $pageTitle,
         'page_intro' => 'A complete collection of my work, experiments, and open-source contributions.',
         'projects' => $projects,
@@ -126,7 +126,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
 
     if (!$project) {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        View::render('404', [
+        View::renderLayout('404', [
             'page_title' => 'Project Not Found',
             'breadcrumbs' => [
                 ['label' => 'yanwittmann.de', 'url' => '/'],
@@ -143,7 +143,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
         'project' => $project
     ]);
 
-    View::render('project_detail', [
+    View::renderLayout('project_detail', [
         'page_title' => $project['title'],
         'page_subtitle' => date('Y-m-d', strtotime($project['created_at'])) . ' // ' . ($project['category'] ?? 'Project'),
         'page_intro' => $project['description'],
@@ -162,7 +162,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
 $router->get('/blog', function () use ($db) {
     $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC")->fetchAll();
 
-    View::render('blog_list', [
+    View::renderLayout('blog_list', [
         'page_title' => 'Latest Posts',
         'page_intro' => 'Read my latest thoughts and updates.',
         'posts' => $posts,
@@ -181,7 +181,7 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
 
     if (!$post) {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        View::render('404', [
+        View::renderLayout('404', [
             'page_title' => 'Post Not Found',
             'breadcrumbs' => [
                 ['label' => 'yanwittmann.de', 'url' => '/'],
@@ -215,7 +215,58 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
         $props['sidebar'] = $sidebar;
     }
 
-    View::render('blog_detail', $props);
+    View::renderLayout('blog_detail', $props);
+});
+
+$router->get('/pages(/.*)?', function($path = '/') use ($db) {
+    $path = trim($path, '/');
+    $baseDir = __DIR__ . '/homepage/pages/';
+    $targetPath = realpath($baseDir . $path);
+
+    if (!$targetPath || strpos($targetPath, realpath($baseDir)) !== 0) {
+        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+        View::renderLayout('404', [
+            'page_title' => 'Page Not Found',
+            'breadcrumbs' => [
+                ['label' => 'yanwittmann.de', 'url' => '/'],
+                ['label' => '404 Not Found']
+            ]
+        ]);
+        return;
+    }
+
+    if (is_dir($targetPath)) {
+        $targetPath = rtrim($targetPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'index.html';
+    }
+
+    if (file_exists($targetPath) && pathinfo($targetPath, PATHINFO_EXTENSION) === 'html') {
+        $content = file_get_contents($targetPath);
+
+        $pageTitle = 'Page';
+        if (preg_match('/<title>(.*?)<\/title>/is', $content, $matches)) {
+            $pageTitle = trim($matches[1]);
+        }
+
+        View::renderSparseLayout('noop', [
+            'page_title' => $pageTitle,
+            'content' => $content,
+            'breadcrumbs' => [
+                ['label' => 'yanwittmann.de', 'url' => '/'],
+                ['label' => 'pages'],
+                ['label' => $pageTitle]
+            ],
+            'extra_css' => ['/static/style/prose.css', '/static/style/components.css']
+        ]);
+    } else {
+        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+        View::renderLayout('404', [
+            'page_title' => 'Page Not Found',
+            'breadcrumbs' => [
+                ['label' => 'yanwittmann.de', 'url' => '/'],
+                ['label' => '404 Not Found']
+            ]
+        ]);
+    }
 });
 
 $router->run();

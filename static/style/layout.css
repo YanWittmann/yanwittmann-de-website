@@ -6,6 +6,10 @@
     padding: 40px 20px;
 }
 
+.page-wrapper.wider {
+    max-width: 1320px;
+}
+
 /* --- 1. Centered Header --- */
 .page-header {
     text-align: center;

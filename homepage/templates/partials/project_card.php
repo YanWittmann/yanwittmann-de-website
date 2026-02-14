@@ -13,10 +13,10 @@
         <?php if (isset($project['image'])): ?>
             <img src="<?= htmlspecialchars($project['image']) ?>"
                  alt="<?= htmlspecialchars($project['title']) ?>"
-                 class="card-image small" loading="lazy">
+                 class="card-image-cover small" loading="lazy">
         <?php endif; ?>
 
-        <div class="card-content">
+        <div class="card-content flex">
             <p style="margin: 0 0 15px 0; line-height: 1.4; color: var(--text-main); flex-grow: 1; font-size: 0.95rem;">
                 <?= htmlspecialchars($project['description']) ?>
             </p>

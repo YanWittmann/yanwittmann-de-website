@@ -7,12 +7,17 @@ if (!function_exists('generate_breadcrumbs')) {
 
         $last_key = array_key_last($crumbs);
         foreach ($crumbs as $key => $crumb) {
-            $label = htmlspecialchars(preg_replace('/\s+/', '-', preg_replace('/[^a-z0-9.\s]/', '', strtolower($crumb['label']))));
-            if ($key !== $last_key && isset($crumb['url'])) {
+            # $label = htmlspecialchars(preg_replace('/\s+/', '-', preg_replace('/[^a-z0-9.\s]/', '', strtolower($crumb['label']))));
+            $label = $crumb['label'];
+
+            if (isset($crumb['url'])) {
                 echo '<a href="' . htmlspecialchars($crumb['url']) . '">' . $label . '</a>';
-                echo '<span class="separator">/</span>';
             } else {
                 echo '<span>' . $label . '</span>';
+            }
+
+            if ($key !== $last_key) {
+                echo '<span class="separator">/</span>';
             }
         }
 

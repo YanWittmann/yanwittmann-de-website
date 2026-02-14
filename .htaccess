@@ -1,5 +1,24 @@
 RewriteEngine On
 
+# pages
+
+# force trailing slash
+RewriteCond %{REQUEST_URI} ^/pages/(.*[^/])$
+RewriteCond %{DOCUMENT_ROOT}/homepage/pages/%1 -d
+RewriteRule ^ /pages/%1/ [R=301,L]
+
+# resource file in pages
+RewriteCond %{REQUEST_URI} ^/pages/(.*)$
+RewriteCond %{REQUEST_URI} !\.html$
+RewriteCond %{DOCUMENT_ROOT}/homepage/pages/%1 -f
+RewriteRule ^pages/(.*)$ homepage/pages/$1 [L]
+
+# html file or dir in pages
+RewriteCond %{REQUEST_URI} ^/pages/
+RewriteRule ^ index.php [QSA,L]
+
+
+# standard router
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 

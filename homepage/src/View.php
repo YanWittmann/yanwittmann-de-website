@@ -23,12 +23,20 @@ class View
         return ob_get_clean();
     }
 
-    public static function render(string $viewName, array $data = []): void
+    public static function renderLayout(string $viewName, array $data = []): void
     {
         $content = self::getOutput($viewName, $data);
 
         extract($data);
         require __DIR__ . '/../templates/layout.php';
+    }
+
+    public static function renderSparseLayout(string $viewName, array $data = []): void
+    {
+        $content = self::getOutput($viewName, $data);
+
+        extract($data);
+        require __DIR__ . '/../templates/sparse_layout.php';
     }
 
     public static function partial(string $viewName, array $data = []): void

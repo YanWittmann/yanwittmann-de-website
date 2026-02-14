@@ -1,6 +1,6 @@
 <aside class="card sidebar">
     <?php if (!empty($project['image'])): ?>
-        <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?> Cover" class="card-image">
+        <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?> Cover" class="card-image-cover">
     <?php endif; ?>
 
     <div style="padding: 20px;">

@@ -34,7 +34,7 @@ body {
 }
 
 a {
-    color: inherit;
+    color: var(--accent);
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -80,10 +80,14 @@ a:hover {
     gap: 5px;
 }
 
-.breadcrumbs a {
+.breadcrumbs a, .breadcrumbs span {
     color: #fff;
-    opacity: 0.7;
+    opacity: 1;
     transition: opacity 0.2s;
+}
+
+.breadcrumbs a:not(:last-child), .breadcrumbs span:not(:last-child) {
+    opacity: 0.7;
 }
 
 .breadcrumbs a:hover {
@@ -93,10 +97,6 @@ a:hover {
 .breadcrumbs .separator {
     margin: 0 2px;
     opacity: 0.5;
-}
-
-.breadcrumbs span {
-    color: #fff;
 }
 
 footer {
