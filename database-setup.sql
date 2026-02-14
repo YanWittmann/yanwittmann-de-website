@@ -41,5 +41,6 @@ CREATE TABLE homepage_guestbook
     author     varchar(100) NOT NULL,
     note       varchar(255) DEFAULT NULL,
     image_data LONGTEXT     NOT NULL,
+    user_hash  varchar(64)  NOT NULL,
     created_at datetime     DEFAULT CURRENT_TIMESTAMP()
 );

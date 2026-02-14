@@ -272,8 +272,25 @@ $router->get('/pages(/.*)?', function ($path = '/') use ($db) {
 });
 
 // API: Guestbook Submission
-$router->post('/api/guestbook', function () use ($db) {
+$router->post('/api/guestbook', function () use ($db, $config) {
+    header('Content-Type: application/json');
     $input = json_decode(file_get_contents('php://input'), true);
+
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $salt = $config['rate_limit_salt'];
+    $user_hash = hash('sha256', $ip . $salt);
+
+    $stmt = $db->query("SELECT created_at FROM homepage_guestbook WHERE user_hash = ? ORDER BY created_at DESC LIMIT 1", [$user_hash]);
+    $lastPost = $stmt->fetch();
+
+    if ($lastPost) {
+        $lastTime = strtotime($lastPost['created_at']);
+        if (time() - $lastTime < 300) { // 5 minutes
+            http_response_code(429);
+            echo json_encode(['success' => false, 'message' => 'Please wait before posting again.']);
+            return;
+        }
+    }
 
     $author = isset($input['author']) ? substr(strip_tags(trim($input['author'])), 0, 100) : 'Anonymous';
     $note = isset($input['note']) ? substr(strip_tags(trim($input['note'])), 0, 255) : '';
@@ -285,19 +302,23 @@ $router->post('/api/guestbook', function () use ($db) {
 
     // Basic validation for image data
     if (strpos($image, 'data:image/png;base64') === 0) {
+        if (strlen($image) > 700000) {
+             http_response_code(400);
+             echo json_encode(['success' => false, 'message' => 'Drawing is too complex.']);
+             return;
+        }
         $db->query(
-            "INSERT INTO homepage_guestbook (author, note, image_data) VALUES (?, ?, ?)",
-            [$author, $note, $image]
+            "INSERT INTO homepage_guestbook (author, note, image_data, user_hash) VALUES (?, ?, ?, ?)",
+            [$author, $note, $image, $user_hash]
         );
-        header('Content-Type: application/json');
         echo json_encode(['success' => true]);
     } else {
-        header('HTTP/1.1 400 Bad Request');
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Invalid image data']);
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid image data.']);
     }
 });
 
+// Guestbook Preview
 $router->get('/api/guestbook/view', function () use ($db) {
     if (!isset($_GET['auth']) || $_GET['auth'] !== 'yan') {
         die("What are you doing here?");

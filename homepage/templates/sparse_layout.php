@@ -31,8 +31,6 @@
 
 <?= $content ?>
 
-<footer>
-    &copy; <?= date('Y') ?> Yan Wittmann
-</footer>
+<footer>&copy; <?= date('Y') ?> Yan Wittmann</footer>
 </body>
 </html>

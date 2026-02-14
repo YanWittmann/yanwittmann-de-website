@@ -1,3 +1,8 @@
+<?php
+$guestbook_colors = [
+        '#b61c52', '#d94f4f', '#ea9b3e', '#4caf50', '#4a90e2', '#9013fe', '#2f2f2f', '#ffffff',
+];
+?>
 <aside id="guestbook-widget" class="card sidebar guestbook-accordion" style="margin-top: 28px;">
     <style>
 
@@ -67,28 +72,62 @@
             cursor: crosshair;
         }
 
-        .guestbook-controls-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-            align-items: center;
-        }
-
-        .guestbook-color-picker {
-            height: 34px;
-            width: 40px;
-            padding: 0;
+        .guestbook-clear-btn {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            z-index: 10;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid #ccc;
+            border-radius: 50%;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
             cursor: pointer;
-            background: none;
+            color: #555;
+            font-family: sans-serif;
+            padding: 0;
         }
 
-        #gb-canvas {
-            display: block;
+        .guestbook-clear-btn:hover {
+            background: white;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .guestbook-color-palette {
+            display: grid;
+            grid-template-columns: repeat(<?= count($guestbook_colors) ?>, 1fr);
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+
+        .guestbook-color-swatch {
             width: 100%;
-            cursor: crosshair;
+            aspect-ratio: 1 / 1;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
             position: relative;
-            background: transparent;
+            background-color: #fff;
+            padding: 0;
+        }
+
+        .guestbook-color-swatch:hover {
+            border-color: var(--accent);
+        }
+
+        .guestbook-color-swatch.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            border: 2px solid var(--border-color);
+            background: var(--accent);
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
         }
     </style>
 
@@ -109,34 +148,45 @@
                 <canvas id="gb-canvas" height="180"></canvas>
             </div>
 
-            <div class="guestbook-controls-row">
-                <input type="color" id="gb-color" class="guestbook-color-picker" value="#b61c52" title="Brush Color">
-                <button type="button" id="gb-clear" class="btn secondary" style="flex-grow: 1; padding: 6px; font-size: 0.8rem;">Clear</button>
+            <div id="gb-color-palette" class="guestbook-color-palette">
+                <?php foreach ($guestbook_colors as $index => $color): ?>
+                    <button class="guestbook-color-swatch <?= $index === 0 ? 'active' : '' ?>"
+                            data-color="<?= htmlspecialchars($color) ?>"
+                            style="background-color: <?= htmlspecialchars($color) ?>;"></button>
+                <?php endforeach; ?>
             </div>
 
             <input type="text" id="gb-author" class="guestbook-input" placeholder="Your Name" maxlength="50">
+            <textarea id="gb-note" class="guestbook-input guestbook-textarea" placeholder="Leave a note..."
+                      maxlength="200"></textarea>
 
-            <textarea id="gb-note" class="guestbook-input guestbook-textarea" placeholder="Leave a note..." maxlength="200"></textarea>
+            <div style="display: flex; gap: 8px;">
+                <button type="button" id="gb-clear" class="btn secondary"
+                        style="flex-grow: 1; padding: 6px; font-size: 0.8rem;">Clear
+                </button>
+                <button type="button" id="gb-send" class="btn primary" style="flex-grow: 2;">Send Entry</button>
+            </div>
 
-            <button type="button" id="gb-send" class="btn primary" style="width: 100%;">Send Entry</button>
-
-            <div id="gb-status" style="margin-top: 10px; font-size: 0.8rem; text-align: center; font-family: var(--font-mono);"></div>
+            <div id="gb-status"
+                 style="margin-top: 10px; font-size: 0.8rem; text-align: center; font-family: var(--font-mono);"></div>
         </div>
     </div>
 
     <script>
         // Scope variables to avoid global pollution
-        (function() {
+        (function () {
             const widget = document.getElementById('guestbook-widget');
             const canvas = document.getElementById('gb-canvas');
             const ctx = canvas.getContext('2d');
-            const colorPicker = document.getElementById('gb-color');
+            const colorPalette = document.getElementById('gb-color-palette');
             const btnClear = document.getElementById('gb-clear');
             const btnSend = document.getElementById('gb-send');
             const statusDiv = document.getElementById('gb-status');
 
+            let currentColor = '<?= htmlspecialchars($guestbook_colors[0]) ?>';
+
             // --- 1. Accordion Logic ---
-            window.toggleGuestbook = function() {
+            window.toggleGuestbook = function () {
                 widget.classList.toggle('open');
             };
 
@@ -185,7 +235,7 @@
                 lastY = coords.y;
 
                 // Draw a dot
-                ctx.fillStyle = colorPicker.value;
+                ctx.fillStyle = currentColor;
                 ctx.beginPath();
                 ctx.arc(lastX, lastY, 1, 0, Math.PI * 2);
                 ctx.fill();
@@ -198,8 +248,11 @@
                 e.preventDefault();
 
                 const coords = getCoords(e);
-                ctx.strokeStyle = colorPicker.value;
-                ctx.lineWidth = 2;
+                if (currentColor === '#ffffff') {
+                    ctx.lineWidth = 6;
+                } else {
+                    ctx.lineWidth = 3;
+                }
 
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
@@ -222,6 +275,17 @@
             canvas.addEventListener('touchstart', start, { passive: false });
             canvas.addEventListener('touchmove', move, { passive: false });
             canvas.addEventListener('touchend', stop);
+
+            colorPalette.addEventListener('click', (e) => {
+                const target = e.target.closest('.guestbook-color-swatch');
+                if (!target) return;
+
+                currentColor = target.dataset.color;
+
+                const currentActive = colorPalette.querySelector('.active');
+                if (currentActive) currentActive.classList.remove('active');
+                target.classList.add('active');
+            });
 
             // --- 3. Controls ---
             btnClear.addEventListener('click', () => {
@@ -254,7 +318,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ author, note, image: imageData })
                 })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || 'Server error');
+                            });
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.success) {
                             statusDiv.style.color = 'green';
@@ -263,7 +334,7 @@
                             // Clear form
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
                             document.getElementById('gb-note').value = '';
-                            // document.getElementById('gb-author').value = ''; // Keep author name for convenience?
+                            document.getElementById('gb-author').value = '';
 
                             // Close after a moment
                             setTimeout(() => {
@@ -271,12 +342,12 @@
                                 statusDiv.textContent = '';
                             }, 2000);
                         } else {
-                            throw new Error(data.message || 'Error');
+                            throw new Error(data.message || 'Woah! Something went wrong.');
                         }
                     })
                     .catch(err => {
                         statusDiv.style.color = 'var(--accent)';
-                        statusDiv.textContent = 'Failed to send.';
+                        statusDiv.textContent = err.message ?? 'Failed to send.';
                         console.error(err);
                     })
                     .finally(() => {

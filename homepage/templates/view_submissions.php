@@ -11,6 +11,7 @@
                 <h3 class="card-title">
                     <span class="card-square"></span>
                     <?= htmlspecialchars($msg['author'] ?? 'Anonymous') ?>
+                    // <?= htmlspecialchars($msg['id'] ?? 'no-id') ?>
                 </h3>
                 <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-light);">
                         <?= date('Y-m-d H:i', strtotime($msg['created_at'])) ?>
@@ -19,7 +20,8 @@
 
             <?php if (!empty($msg['image_data'])): ?>
                 <!-- Base64 Image -->
-                <img src="<?= htmlspecialchars($msg['image_data']) ?>" alt="Drawing by <?= htmlspecialchars($msg['author']) ?>" loading="lazy">
+                <img src="<?= htmlspecialchars($msg['image_data']) ?>"
+                     alt="Drawing by <?= htmlspecialchars($msg['author']) ?>" loading="lazy">
             <?php endif; ?>
 
             <?php if (!empty($msg['note'])): ?>
