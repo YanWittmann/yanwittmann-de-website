@@ -1,38 +1,29 @@
 CREATE TABLE homepage_content
 (
-    id          int NOT NULL PRIMARY KEY,
-    content     longtext DEFAULT NULL,
-    is_markdown tinyint(1) DEFAULT 1
-);
-
-CREATE TABLE homepage_posts
-(
-    id          int          NOT NULL PRIMARY KEY,
-    slug        varchar(255) NOT NULL,
+    id          int          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    slug        varchar(255) NOT NULL UNIQUE,
     title       varchar(255) NOT NULL,
     description text     DEFAULT NULL,
     image       text     DEFAULT NULL,
     featured    bool     DEFAULT false,
     tags        JSON     DEFAULT NULL,
     created_at  datetime DEFAULT CURRENT_TIMESTAMP(),
-    content_id  int,
-    FOREIGN KEY (content_id) REFERENCES homepage_content (id)
+    content     longtext DEFAULT NULL,
+    is_markdown tinyint(1) DEFAULT 1
+);
+
+CREATE TABLE homepage_posts
+(
+    content_id int NOT NULL PRIMARY KEY,
+    FOREIGN KEY (content_id) REFERENCES homepage_content (id) ON DELETE CASCADE
 );
 
 CREATE TABLE homepage_projects
 (
-    id          int          NOT NULL PRIMARY KEY,
-    slug        varchar(255) NOT NULL,
-    category    varchar(50) DEFAULT 'Project',
-    title       varchar(255) NOT NULL,
-    description text        DEFAULT NULL,
-    image       text        DEFAULT NULL,
-    featured    bool        DEFAULT false,
-    tags        JSON        DEFAULT NULL,
-    links       JSON        DEFAULT NULL,
-    created_at  datetime    DEFAULT CURRENT_TIMESTAMP(),
-    content_id  int,
-    FOREIGN KEY (content_id) REFERENCES homepage_content (id)
+    content_id int NOT NULL PRIMARY KEY,
+    category   varchar(50) DEFAULT 'Project',
+    links      JSON        DEFAULT NULL,
+    FOREIGN KEY (content_id) REFERENCES homepage_content (id) ON DELETE CASCADE
 );
 
 CREATE TABLE homepage_guestbook

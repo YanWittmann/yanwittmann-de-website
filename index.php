@@ -26,8 +26,9 @@ $router->set404(function () {
 
 // Homepage
 $router->get('/', function () use ($db) {
-    $projects = $db->query("SELECT * FROM homepage_projects ORDER BY featured DESC, created_at DESC LIMIT 4")->fetchAll();
-    $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC LIMIT 4")->fetchAll();
+    $projects = $db->query("SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id ORDER BY c.featured DESC, c.created_at DESC LIMIT 4")->fetchAll();
+
+    $posts = $db->query("SELECT c.* FROM homepage_content c JOIN homepage_posts p ON c.id = p.content_id ORDER BY c.created_at DESC LIMIT 4")->fetchAll();
 
     $sidebar = View::getOutput('partials/sidebar_home', []);
     $sidebar .= View::getOutput('partials/sidebar_draw', []);
@@ -53,15 +54,17 @@ $router->get('/projects', function () use ($db) {
     $hasActiveFilter = $activeCategory !== null || $activeTag !== null;
 
     $params = [];
-    $sql = "SELECT * FROM homepage_projects";
+    $sql = "SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id";
+
     if ($activeCategory) {
-        $sql .= " WHERE category = ?";
+        $sql .= " WHERE p.category = ?";
         $params[] = $activeCategory;
     } elseif ($activeTag) {
-        $sql .= " WHERE JSON_CONTAINS(tags, ?)";
+        $sql .= " WHERE JSON_CONTAINS(c.tags, ?)";
         $params[] = '"' . $activeTag . '"';
     }
-    $sql .= " ORDER BY created_at DESC";
+
+    $sql .= " ORDER BY c.created_at DESC";
     $projects = $db->query($sql, $params)->fetchAll();
 
     $categories = $db->query("SELECT DISTINCT category FROM homepage_projects WHERE category IS NOT NULL AND category != '' ORDER BY category ASC")->fetchAll(PDO::FETCH_COLUMN);
@@ -74,7 +77,8 @@ $router->get('/projects', function () use ($db) {
         ];
     }
 
-    $allTagsJson = $db->query("SELECT tags FROM homepage_projects WHERE tags IS NOT NULL AND JSON_VALID(tags) AND JSON_LENGTH(tags) > 0")->fetchAll(PDO::FETCH_COLUMN);
+    $allTagsJson = $db->query("SELECT c.tags FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id WHERE c.tags IS NOT NULL AND JSON_VALID(c.tags) AND JSON_LENGTH(c.tags) > 0")->fetchAll(PDO::FETCH_COLUMN);
+
     $allTags = [];
     foreach ($allTagsJson as $jsonString) {
         $decodedTags = json_decode($jsonString, true);
@@ -100,7 +104,6 @@ $router->get('/projects', function () use ($db) {
     ]);
 
     $pageTitle = 'All Projects';
-    $subtitle = 'A complete collection of my work, experiments, and open-source contributions.';
 
     if ($activeCategory) {
         $pageTitle = $activeCategory;
@@ -123,7 +126,7 @@ $router->get('/projects', function () use ($db) {
 
 // Single Project
 $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
-    $stmt = $db->query("SELECT p.*, c.content, c.is_markdown FROM homepage_projects p JOIN homepage_content c ON p.content_id = c.id WHERE p.slug = ?", [$slug]);
+    $stmt = $db->query("SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id WHERE c.slug = ?", [$slug]);
     $project = $stmt->fetch();
 
     if (!$project) {
@@ -162,7 +165,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
 
 // Blog List
 $router->get('/blog', function () use ($db) {
-    $posts = $db->query("SELECT * FROM homepage_posts ORDER BY created_at DESC")->fetchAll();
+    $posts = $db->query("SELECT c.* FROM homepage_content c JOIN homepage_posts p ON c.id = p.content_id ORDER BY c.created_at DESC")->fetchAll();
 
     View::renderLayout('blog_list', [
         'page_title' => 'Latest Posts',
@@ -178,7 +181,7 @@ $router->get('/blog', function () use ($db) {
 
 // Single Post
 $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
-    $stmt = $db->query("SELECT p.*, c.content, c.is_markdown FROM homepage_posts p JOIN homepage_content c ON p.content_id = c.id WHERE p.slug = ?", [$slug]);
+    $stmt = $db->query("SELECT c.* FROM homepage_content c JOIN homepage_posts p ON c.id = p.content_id WHERE c.slug = ?", [$slug]);
     $post = $stmt->fetch();
 
     if (!$post) {
@@ -303,9 +306,9 @@ $router->post('/api/guestbook', function () use ($db, $config) {
     // Basic validation for image data
     if (strpos($image, 'data:image/png;base64') === 0) {
         if (strlen($image) > 700000) {
-             http_response_code(400);
-             echo json_encode(['success' => false, 'message' => 'Drawing is too complex.']);
-             return;
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Drawing is too complex.']);
+            return;
         }
         $db->query(
             "INSERT INTO homepage_guestbook (author, note, image_data, user_hash) VALUES (?, ?, ?, ?)",

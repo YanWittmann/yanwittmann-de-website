@@ -2,8 +2,9 @@
 .prose {
     color: var(--text-light);
     font-size: 1.1rem;
-    line-height: 1.7;
+    line-height: 1.5;
     max-width: 75ch;
+    text-align: justify;
 }
 
 /* Fix for top alignment */
