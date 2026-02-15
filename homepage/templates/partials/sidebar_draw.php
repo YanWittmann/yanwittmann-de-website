@@ -2,6 +2,9 @@
 $guestbook_colors = [
         '#b61c52', '#d94f4f', '#ea9b3e', '#4caf50', '#4a90e2', '#9013fe', '#2f2f2f', '#ffffff',
 ];
+$emoji_array = [":)", ":)", ":)", ":)", ":)", ":)", "UwU", ";-)", ":]", "=D"];
+$emoji = array_rand($emoji_array);
+$emoji = $emoji_array[$emoji];
 ?>
 
 <style>
@@ -58,7 +61,6 @@ $guestbook_colors = [
         width: 100%;
         border: 1px dashed var(--text-light);
         margin-bottom: 8px;
-        background: #fff;
         position: relative;
         line-height: 0;
     }
@@ -160,7 +162,9 @@ $guestbook_colors = [
                       maxlength="255"></textarea>
 
             <div style="display: flex; gap: 8px;">
-                <button type="button" id="gb-send" class="btn primary" style="width: 100%;">Send Entry :)</button>
+                <button type="button" id="gb-send" class="btn primary" style="width: 100%;">
+                    Send Card <?= $emoji ?>
+                </button>
             </div>
 
             <div id="gb-status"
@@ -193,9 +197,10 @@ $guestbook_colors = [
             }
 
             function resizeCanvas() {
-                const rect = canvas.parentElement.getBoundingClientRect();
-                if (rect.width > 0 && canvas.width !== rect.width) {
-                    canvas.width = rect.width;
+                const container = canvas.parentElement;
+                const innerWidth = container.clientWidth;
+                if (innerWidth > 0 && canvas.width !== innerWidth) {
+                    canvas.width = innerWidth;
                     fillWhite();
                 }
             }
@@ -377,7 +382,7 @@ $guestbook_colors = [
                     })
                     .finally(() => {
                         btnSend.disabled = false;
-                        btnSend.textContent = 'Send Entry :)';
+                        btnSend.textContent = 'Send Card <?= $emoji ?>';
                     });
             });
 
