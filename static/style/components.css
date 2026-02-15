@@ -64,7 +64,7 @@
     display: inline-block;
 }
 
-.card>img {
+.card>img:not(.no-card-image) {
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -198,7 +198,7 @@
 
 .text-tag:not(:last-child)::after {
     content: '•';
-    margin: 0 4px 0 8px;
+    margin: 0 0 0 8px;
     color: #ccc;
 }
 

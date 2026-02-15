@@ -9,4 +9,4 @@ INSERT INTO `homepage_projects` (`id`, `slug`, `category`, `title`, `description
      (52, 'project-zeta', 'Game Mod', 'OW Mod: Open Doors', 'A mod for the game Outer Wilds.', '2023-10-10 16:00:00', 103, '/static/img/open_doors_thumb.webp', 0, '["C#", "Unity"]', '[{"label": "NexusMods", "url": "#", "style": "primary", "icon": "fas fa-cube"}]');
 
 INSERT INTO `homepage_posts` (`id`, `slug`, `title`, `description`, `created_at`, `content_id`, `image`, `featured`, `tags`) VALUES
-    (1, 'first-blog-post', 'New Website Design', 'It\'s been a while, but I finally reworked my website.', '2023-10-25 08:00:00', 101, '/static/img/profile-picture-yan.webp', 0, '[]');
+    (1, 'first-blog-post', 'New Website Design', 'It\'s been a while, but I finally reworked my website.', '2023-10-25 08:00:00', 101, '/static/img/profile-picture-yan-1.webp', 0, '[]');

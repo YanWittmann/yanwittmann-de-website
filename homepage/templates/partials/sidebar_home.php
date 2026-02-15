@@ -6,7 +6,7 @@ $tech_stack = [
 ];
 ?>
 <aside class="card sidebar padded center">
-    <img src="/static/img/profile-picture-yan.webp" class="profile-pic" alt="Profile">
+    <img src="/static/img/profile-picture-yan-<?= rand(1,4) ?>.webp" class="profile-pic no-card-image" alt="Profile">
 
     <h3 class="card-title" style="justify-content: center; font-size: 1.2rem; margin-bottom: 5px;">Yan Wittmann</h3>
     <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-light); margin-bottom: 5px;">
