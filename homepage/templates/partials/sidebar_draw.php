@@ -145,7 +145,7 @@ $emoji = $emoji_array[$emoji];
         <div style="padding: 15px;">
 
             <div class="guestbook-canvas-container">
-                <canvas id="gb-canvas" height="180"></canvas>
+                <canvas id="gb-canvas" height="200"></canvas>
                 <button type="button" id="gb-clear" class="guestbook-clear-btn" title="Clear Canvas">&times;</button>
             </div>
 
