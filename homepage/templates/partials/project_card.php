@@ -13,7 +13,7 @@
         <?php if (isset($project['image'])): ?>
             <img src="<?= htmlspecialchars($project['image']) ?>"
                  alt="<?= htmlspecialchars($project['title']) ?>"
-                 class="card-image-cover small" loading="lazy">
+                 class="card-image cover-ar-169 small" loading="lazy">
         <?php endif; ?>
 
         <div class="card-content flex">
@@ -22,9 +22,8 @@
             </p>
 
             <?php
-            $tags = [];
+            $tags = array_slice(parse_json_list($project['tags'] ?? []), 0, 3);
             if (isset($project['category'])) $tags[] = $project['category'];
-            $tags = array_merge($tags, parse_json_list($project['tags'] ?? []));
             ?>
             <?php \App\View::partial('tags_list', ['tags' => $tags, 'style' => 'text']); ?>
         </div>

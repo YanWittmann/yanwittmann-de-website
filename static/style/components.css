@@ -64,24 +64,36 @@
     display: inline-block;
 }
 
-.card>img:not(.no-card-image) {
+.card > img:not(.no-card-image) {
     border-bottom: 1px solid var(--border-color);
 }
 
-.card>iframe {
+.card > iframe {
     border-bottom: 1px solid var(--border-color);
 }
 
-.card>a {
+.card > a {
     border-bottom: 1px solid var(--border-color);
 }
 
-.card-image-cover {
+.card-image {
     width: 100%;
+    display: block;
+}
+
+.card-image.cover-h-200 {
     height: 200px;
     object-fit: cover;
-    display: block;
-    background-color: #111;
+}
+
+.card-image.cover-ar-169 {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.card-image.scale-down-h-200 {
+    height: 200px;
+    object-fit: scale-down;
 }
 
 .card-image-cover.small {

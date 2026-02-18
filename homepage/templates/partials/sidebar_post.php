@@ -1,6 +1,6 @@
 <aside class="card sidebar">
     <?php if (!empty($post['image'])): ?>
-        <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?> Cover" class="card-image-cover">
+        <img src="<?= htmlspecialchars($post['image']) ?>" alt="<?= htmlspecialchars($post['title']) ?> Cover" class="card-image">
     <?php endif; ?>
 
     <?php if (!empty($post['tags'])): ?>

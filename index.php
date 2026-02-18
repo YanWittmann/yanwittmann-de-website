@@ -26,9 +26,11 @@ $router->set404(function () {
 
 // Homepage
 $router->get('/', function () use ($db) {
-    $projects = $db->query("SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id ORDER BY c.featured DESC, c.created_at DESC LIMIT 4")->fetchAll();
+    $limit = isMobileClient() ? 2 : 4;
 
-    $posts = $db->query("SELECT c.* FROM homepage_content c JOIN homepage_posts p ON c.id = p.content_id ORDER BY c.created_at DESC LIMIT 4")->fetchAll();
+    $projects = $db->query("SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id ORDER BY c.featured DESC, c.created_at DESC LIMIT $limit")->fetchAll();
+
+    $posts = $db->query("SELECT c.* FROM homepage_content c JOIN homepage_posts p ON c.id = p.content_id ORDER BY c.created_at DESC LIMIT $limit")->fetchAll();
 
     $sidebar = View::getOutput('partials/sidebar_home', []);
     $sidebar .= View::getOutput('partials/sidebar_draw', []);
