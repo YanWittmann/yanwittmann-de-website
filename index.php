@@ -28,7 +28,14 @@ $router->set404(function () {
 $router->get('/', function () use ($db) {
     $limit = isMobileClient() ? 2 : 4;
 
-    $projects = $db->query("SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id ORDER BY c.featured DESC, c.created_at DESC LIMIT $limit")->fetchAll();
+    $projects = $db->query("
+        SELECT s.*, p.category, p.links, c.* 
+        FROM homepage_content c 
+        JOIN homepage_projects p ON c.id = p.content_id 
+        LEFT JOIN homepage_github_stats s ON p.github_repo = s.repo_id
+        ORDER BY c.featured DESC, c.created_at DESC 
+        LIMIT $limit
+    ")->fetchAll();
 
     $posts = $db->query("SELECT c.* FROM homepage_content c JOIN homepage_posts p ON c.id = p.content_id ORDER BY c.created_at DESC LIMIT $limit")->fetchAll();
 
@@ -56,7 +63,10 @@ $router->get('/projects', function () use ($db) {
     $hasActiveFilter = $activeCategory !== null || $activeTag !== null;
 
     $params = [];
-    $sql = "SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id";
+    $sql = "SELECT s.*, p.category, p.links, c.* 
+            FROM homepage_content c 
+            JOIN homepage_projects p ON c.id = p.content_id
+            LEFT JOIN homepage_github_stats s ON p.github_repo = s.repo_id";
 
     if ($activeCategory) {
         $sql .= " WHERE p.category = ?";
@@ -122,13 +132,19 @@ $router->get('/projects', function () use ($db) {
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'projects']
         ],
-        'extra_css' => ['/static/style/prose.css']
+        'extra_css' => ['/homepage/static/style/prose.css']
     ]);
 });
 
 // Single Project
 $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
-    $stmt = $db->query("SELECT c.*, p.category, p.links FROM homepage_content c JOIN homepage_projects p ON c.id = p.content_id WHERE c.slug = ?", [$slug]);
+    $stmt = $db->query("
+        SELECT s.*, p.category, p.links, c.* 
+        FROM homepage_content c 
+        JOIN homepage_projects p ON c.id = p.content_id 
+        LEFT JOIN homepage_github_stats s ON p.github_repo = s.repo_id
+        WHERE c.slug = ?
+    ", [$slug]);
     $project = $stmt->fetch();
 
     if (!$project) {
@@ -144,6 +160,9 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
 
     $project['tags'] = json_decode($project['tags'] ?? '[]', true);
     $project['links'] = json_decode($project['links'] ?? '[]', true);
+    $project['languages'] = json_decode($project['languages'] ?? '[]', true);
+    $project['topics'] = json_decode($project['topics'] ?? '[]', true);
+
     $project['content'] = $renderer->render($project['content'], (bool)$project['is_markdown']);
 
     $sidebar = View::getOutput('partials/sidebar_project', [
@@ -161,7 +180,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
             ['label' => 'projects', 'url' => '/projects'],
             ['label' => $project['title']]
         ],
-        'extra_css' => ['/static/style/prose.css']
+        'extra_css' => ['/homepage/static/style/prose.css']
     ]);
 });
 
@@ -177,7 +196,7 @@ $router->get('/blog', function () use ($db) {
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'blog']
         ],
-        'extra_css' => ['/static/style/prose.css']
+        'extra_css' => ['/homepage/static/style/prose.css']
     ]);
 });
 
@@ -212,7 +231,7 @@ $router->get('/blog/([^/]+)', function ($slug) use ($db, $renderer) {
             ['label' => 'blog', 'url' => '/blog'],
             ['label' => $post['title']]
         ],
-        'extra_css' => ['/static/style/prose.css']
+        'extra_css' => ['/homepage/static/style/prose.css']
     ];
 
     if (isset($post['image'])) {
@@ -262,7 +281,7 @@ $router->get('/pages(/.*)?', function ($path = '/') use ($db) {
                 ['label' => 'pages'],
                 ['label' => $pageTitle]
             ],
-            'extra_css' => ['/static/style/prose.css', '/static/style/components.css']
+            'extra_css' => ['/homepage/static/style/prose.css', '/homepage/static/style/components.css']
         ]);
     } else {
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
@@ -339,7 +358,7 @@ $router->get('/api/guestbook/view', function () use ($db) {
             ['label' => 'guestbook'],
             ['label' => "Submissions"]
         ],
-        'extra_css' => ['/static/style/prose.css', '/static/style/components.css']
+        'extra_css' => ['/homepage/static/style/prose.css', '/homepage/static/style/components.css']
     ]);
 });
 

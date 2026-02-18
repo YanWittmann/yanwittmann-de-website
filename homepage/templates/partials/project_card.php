@@ -5,9 +5,30 @@
                 <span class="card-square"></span>
                 <?= htmlspecialchars($project['title']) ?>
             </h3>
-            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-light);">
-                <?= date('Y-m-d', strtotime($project['created_at'])) ?>
-            </span>
+
+            <div class="card-header-meta">
+                <?php
+                $statsHtml = '';
+
+                if (!empty($project['forks']) && $project['forks'] > 0) {
+                    $statsHtml .= '<span class="card-header-meta-stat" title="' . number_format($project['forks']) . ' Forks">';
+                    $statsHtml .= number_format($project['forks']) . ' ' . icon('code-fork', 'card-header-meta-icon');
+                    $statsHtml .= '</span>';
+                }
+
+                if (!empty($project['stars'])) {
+                    $statsHtml .= '<span class="card-header-meta-stat" title="' . number_format($project['stars']) . ' GitHub Stars">';
+                    $statsHtml .= number_format($project['stars']) . ' ' . icon('star', 'card-header-meta-icon');
+                    $statsHtml .= '</span>';
+                }
+
+                if ($statsHtml) {
+                    echo $statsHtml;
+                } else {
+                    echo '<span class="card-header-meta-date">' . date('Y-m-d', strtotime($project['created_at'])) . '</span>';
+                }
+                ?>
+            </div>
         </header>
 
         <?php if (isset($project['image'])): ?>

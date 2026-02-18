@@ -8,9 +8,9 @@
     <meta name="author" content="Yan Wittmann">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/style/main.css">
-    <link rel="stylesheet" href="/static/style/layout.css">
-    <link rel="stylesheet" href="/static/style/components.css">
+    <link rel="stylesheet" href="/homepage/static/style/main.css">
+    <link rel="stylesheet" href="/homepage/static/style/layout.css">
+    <link rel="stylesheet" href="/homepage/static/style/components.css">
 
     <?php if (isset($extra_css)): ?>
         <?php foreach ($extra_css as $css_file): ?>

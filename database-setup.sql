@@ -42,7 +42,6 @@ CREATE TABLE homepage_github_stats
     is_archived    bool         DEFAULT false,
     topics         JSON,
     languages      JSON,
-    raw_metrics    JSON,
     last_pushed_at datetime,
     last_synced_at datetime     DEFAULT CURRENT_TIMESTAMP()
 );
