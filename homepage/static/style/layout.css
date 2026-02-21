@@ -56,18 +56,29 @@
 
 /* --- 3. Grid Structure --- */
 .layout-grid {
-    display: grid;
-    grid-template-columns: 1fr 300px;
+    display: flex;
+    flex-wrap: nowrap;
     gap: 50px;
-    align-items: start;
+    align-items: flex-start;
 }
 
 .sidebar-column {
     min-width: 0;
+    width: 300px;
+    flex-shrink: 0;
+    transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.sidebar-column.collapsed {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-left: -50px; /* Counteracts the gap in the flex parent */
 }
 
 .main-column {
     min-width: 0;
+    flex-grow: 1;
 }
 
 /* --- Grids and Lists --- */
@@ -98,6 +109,11 @@
     .sidebar-column {
         order: 2;
         width: 100%;
+    }
+
+    .sidebar-column.collapsed {
+        margin-left: 0;
+        margin-top: -50px;
     }
 
     .main-column {

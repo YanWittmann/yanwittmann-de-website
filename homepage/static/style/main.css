@@ -110,3 +110,10 @@ footer {
     font-family: var(--font-mono);
     border-top: 4px solid var(--accent);
 }
+
+svg.icon {
+    height: 1em;
+    width: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
