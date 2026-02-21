@@ -118,6 +118,8 @@ $router->get('/projects', function () use ($db) {
         'page_intro' => 'A complete collection of my work, experiments, and open-source contributions.',
         'projects' => $projects,
         'sidebar' => $sidebar,
+        'allow_sidebar_toggle' => true,
+        'sidebar_default_state' => 'hidden',
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'projects']

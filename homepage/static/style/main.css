@@ -116,4 +116,5 @@ svg.icon {
     width: 1em;
     vertical-align: middle;
     fill: currentColor;
+    display: inline-block;
 }

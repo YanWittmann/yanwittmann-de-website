@@ -30,6 +30,11 @@
 
 <div class="page-wrapper">
 
+    <?php
+    $allow_toggle = $allow_sidebar_toggle ?? false;
+    $default_state = $sidebar_default_state ?? 'visible';
+    ?>
+
     <?php if (isset($page_title)): ?>
         <header class="page-header">
             <h1 class="page-title"><?= $page_title ?></h1>
@@ -55,7 +60,15 @@
             ?>
         </header>
 
-        <hr class="layout-separator">
+        <!-- Separator + Toggle Button -->
+        <div class="layout-separator-container">
+            <hr class="layout-separator-line">
+            <?php if (!empty($sidebar) && $allow_toggle): ?>
+                <button id="sidebar-toggle" class="layout-toggle-btn" type="button" aria-label="Toggle Sidebar">
+                    &raquo; Hide Sidebar
+                </button>
+            <?php endif; ?>
+        </div>
     <?php endif; ?>
 
     <div class="layout-grid">
@@ -64,9 +77,45 @@
         </main>
 
         <?php if (!empty($sidebar)): ?>
-            <aside class="sidebar-column">
+            <div class="sidebar-column" id="sidebar-col">
                 <?= $sidebar ?>
-            </aside>
+            </div>
+
+        <?php if ($allow_toggle): ?>
+            <script>
+                (function() {
+                    const sidebar = document.getElementById('sidebar-col');
+                    const toggleBtn = document.getElementById('sidebar-toggle');
+                    const STATE_KEY = 'yanwittmann_sidebar_state';
+
+                    if (!sidebar || !toggleBtn) return;
+
+                    function setSidebarState(state) {
+                        if (state === 'hidden') {
+                            sidebar.classList.add('collapsed');
+                            toggleBtn.innerHTML = '&laquo; Show Sidebar';
+                        } else {
+                            sidebar.classList.remove('collapsed');
+                            toggleBtn.innerHTML = '&raquo; Hide Sidebar';
+                        }
+                    }
+
+                    // LocalStorage overrides page default
+                    const storedState = localStorage.getItem(STATE_KEY);
+                    const initialState = storedState || '<?= $default_state ?>';
+
+                    setSidebarState(initialState);
+
+                    toggleBtn.addEventListener('click', function() {
+                        const isCurrentlyCollapsed = sidebar.classList.contains('collapsed');
+                        const newState = isCurrentlyCollapsed ? 'visible' : 'hidden';
+
+                        setSidebarState(newState);
+                        localStorage.setItem(STATE_KEY, newState);
+                    });
+                })();
+            </script>
+        <?php endif; ?>
         <?php endif; ?>
     </div>
 

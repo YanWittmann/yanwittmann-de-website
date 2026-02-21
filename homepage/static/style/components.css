@@ -319,11 +319,11 @@
 }
 
 .socials svg {
-    width: 1.3em;
+    font-size: 1.3em;
 }
 
 .socials .icon-linkedin {
-    width: 1.1em;
+    font-size: 1.1em;
 }
 
 .socials a:hover {
@@ -374,7 +374,7 @@
 }
 
 .blog-row-icon-placeholder svg {
-    width: 40px;
+    font-size: 40px;
 }
 
 .blog-row-content-col {
