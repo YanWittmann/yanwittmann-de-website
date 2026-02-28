@@ -121,6 +121,6 @@
 
 </div>
 
-<footer>&copy; <?= date('Y') ?> Yan Wittmann</footer>
+<footer><span style="font-size: 1.1em;">&copy;</span> <?= date('Y') ?> Yan Wittmann</footer>
 </body>
 </html>

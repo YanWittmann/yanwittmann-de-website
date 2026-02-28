@@ -162,6 +162,7 @@ $router->get('/projects/([^/]+)', function ($slug) use ($db, $renderer) {
         'page_intro' => $project['description'],
         'project' => $project,
         'sidebar' => $sidebar,
+        'allow_sidebar_toggle' => true,
         'breadcrumbs' => [
             ['label' => 'yanwittmann.de', 'url' => '/'],
             ['label' => 'projects', 'url' => '/projects'],

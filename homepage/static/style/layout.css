@@ -100,6 +100,8 @@
 .main-column {
     min-width: 0;
     flex-grow: 1;
+    display: flex;
+    justify-content: center;
 }
 
 /* --- Grids and Lists --- */

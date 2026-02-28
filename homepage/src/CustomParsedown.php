@@ -10,9 +10,11 @@ class CustomParsedown extends Parsedown
     {
         $link = parent::inlineLink($Excerpt);
 
-        if (!isset($link)) { return null; }
+        if (!isset($link)) {
+            return null;
+        }
 
-        $href = $link['element']['attributes']['href'];
+        $href = &$link['element']['attributes']['href'];
 
         if (strpos($href, 'http') === 0) {
             $link['element']['attributes']['rel'] = 'noopener noreferrer';

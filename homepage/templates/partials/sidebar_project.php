@@ -15,7 +15,7 @@
                        class="btn <?= ($link['style'] ?? 'primary') === 'primary' ? 'primary' : 'secondary' ?>"
                        target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($link['icon'])): ?>
-                            <?= icon($link['icon'], '', 'height: 1em;') ?>
+                            <?= icon($link['icon']) ?>
                         <?php endif; ?>
                         <?= htmlspecialchars($link['label']) ?>
                     </a>
@@ -100,12 +100,6 @@
                     </span>
                 </div>
             <?php endforeach; ?>
-
-            <?php if (empty($rows)): ?>
-                <div style="padding: 12px 0; border-bottom: 1px solid var(--border-color);  font-size: 0.9rem; color: var(--text-light);">
-                    No metrics available.
-                </div>
-            <?php endif; ?>
         </div>
 
         <?php if (!empty($project['tags'])): ?>
